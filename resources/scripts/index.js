@@ -88,11 +88,27 @@ like = (id) => {
 };
 
 navHome = () => {
-  window.location.assign(`/home.html`);
+  const uid =
+    sessionStorage.getItem("jokkouid") !== null
+      ? sessionStorage.getItem("jokkouid")
+      : localStorage.getItem("jokkouid");
+  if (uid !== null) {
+    window.location.assign(`/home.html`);
+  } else {
+    window.location.assign(`/index.html`);
+  }
 };
 
 navProfile = () => {
-  window.location.assign(`/profile.html`);
+  const uid =
+    sessionStorage.getItem("jokkouid") !== null
+      ? sessionStorage.getItem("jokkouid")
+      : localStorage.getItem("jokkouid");
+  if (uid !== null) {
+    window.location.assign(`/profile.html`);
+  } else {
+    window.location.assign(`/index.html`);
+  }
 };
 
 navUser = (id) => {
@@ -109,7 +125,7 @@ navUser = (id) => {
 
 signOut = () => {
   if (localStorage.getItem("jokkouid") !== null) {
-    locqalStorage.removeItem("jokkouid");
+    localStorage.removeItem("jokkouid");
   } else {
     sessionStorage.removeItem("jokkouid");
   }
