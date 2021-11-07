@@ -56,7 +56,9 @@ deleteAccount = async () => {
       .catch((error) => {
         reject(error);
       });
-    window.location.replace(`/index.html`);
+    setTimeout(() => {
+      window.location.replace(`/index.html`);
+    }, 200);
   } catch (error) {
     console.log(error);
   }
