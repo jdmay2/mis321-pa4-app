@@ -109,7 +109,10 @@ navUser = (id) => {
 };
 
 signOut = () => {
-  localStorage.removeItem("jokkouid");
-  sessionStorage.removeItem("jokkouid");
+  if (localStorage.getItem("jokkouid") !== null) {
+    locqalStorage.removeItem("jokkouid");
+  } else {
+    sessionStorage.removeItem("jokkouid");
+  }
   window.location.replace(`/index.html`);
 };

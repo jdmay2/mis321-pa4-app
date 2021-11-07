@@ -366,7 +366,6 @@ input::-webkit-search-cancel-button {
 }
 
 #create-btn:hover {
-  /* background-color: #0026ff70; */
   background-image: linear-gradient(140deg, #ff5607, #f6412d, #d40047, #4f00b6);
 }
 
@@ -514,6 +513,99 @@ input::-webkit-search-cancel-button {
 }
 
 #postModal .modal-dialog .modal-content #post-button .btn:hover {
+  background-image: linear-gradient(140deg, #f6412d, #d40047);
+}
+
+#deleteModal .modal-dialog .modal-content {
+  border-radius: 25px 25px 0px 0px;
+  background-color: transparent;
+  color: whitesmoke;
+}
+
+#deleteModal .modal-dialog .modal-content #inside {
+  display: flex;
+  flex-grow: 1;
+  background-color: transparent;
+  background-image: linear-gradient(
+    120deg,
+    #ff5607,
+    #f6412d,
+    #d40047,
+    #4f00b6,
+    #301580
+  );
+  border-radius: 25px 25px 25px 25px;
+}
+
+#deleteModal .modal-dialog .modal-content .modal-header {
+  background-color: none;
+  border-radius: 25px 25px 0px 0px;
+  border-bottom: 0 none;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.modal-title {
+  font-size: medium;
+}
+
+#deleteModal .modal-dialog .modal-content .modal-header .btn-close {
+  outline: none;
+  margin-top: 2px;
+}
+
+#deleteModal .modal-dialog .modal-content .modal-header .btn-close:focus {
+  outline: none;
+}
+
+#deleteModal .modal-dialog .modal-content .modal-body {
+  /* background-color: #181818; */
+  height: fit-content;
+  min-height: 150px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  vertical-align: top;
+  align-items: center;
+  border-radius: 0px 0px 25px 25px;
+  /* background-image: linear-gradient(
+    120deg,
+    #ff5607,
+    #f6412d,
+    #d40047,
+    #4f00b6,
+    #301580,
+    #250d57
+  ); */
+}
+
+#deleteModal .modal-dialog .modal-content .modal-body .bi {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+#deleteModal .modal-dialog .modal-content #post-button {
+  width: 100%;
+  padding-left: 0px;
+  padding-right: 0px;
+  border-top: 0 none;
+  background-color: #00000000;
+}
+
+#deleteModal .modal-dialog .modal-content #post-button .btn {
+  background-color: #180929;
+  border-radius: 25px;
+  border-width: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  outline: none;
+}
+
+#deleteModal .modal-dialog .modal-content #post-button .btn:hover {
   background-image: linear-gradient(140deg, #f6412d, #d40047);
 }
 

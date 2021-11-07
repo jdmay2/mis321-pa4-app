@@ -5,6 +5,14 @@ reload = () => {
   window.location.reload();
 };
 
+getId = () => {
+  const uid =
+    sessionStorage.getItem("jokkouid") !== null
+      ? sessionStorage.getItem("jokkouid")
+      : localStorage.getItem("jokkouid");
+  return uid;
+};
+
 dateFormat = (date) => {
   var date = new Date(date);
   var hh = date.getHours() - 5;
@@ -26,6 +34,32 @@ dateFormat = (date) => {
     " " +
     strTime;
   return date;
+};
+
+deleteAccount = async () => {
+  const uid = getId();
+  if (localStorage.getItem("jokkouid") !== null) {
+    locqalStorage.removeItem("jokkouid");
+  } else {
+    sessionStorage.removeItem("jokkouid");
+  }
+  try {
+    fetch(`${userUrl}/${uid}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.text())
+      .then((res) => resolve(res ? JSON.parse(res) : {}))
+      .catch((error) => {
+        reject(error);
+      });
+    window.location.replace(`/index.html`);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 handleDeletePost = async (id) => {
@@ -171,10 +205,7 @@ handleOnLogin = async () => {
 };
 
 handleOnPost = async () => {
-  const uid =
-    sessionStorage.getItem("jokkouid") !== null
-      ? sessionStorage.getItem("jokkouid")
-      : localStorage.getItem("jokkouid");
+  const uid = getId();
   const text = document.getElementById("postInput").value;
   const date = new Date().toISOString();
   console.log(date);
@@ -209,10 +240,7 @@ handleOnPost = async () => {
 
 populatePostList = async () => {
   try {
-    const uid =
-      sessionStorage.getItem("jokkouid") !== null
-        ? sessionStorage.getItem("jokkouid")
-        : localStorage.getItem("jokkouid");
+    const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
     const likes = await fetch(`https://localhost:5001/api/Like`).then((res) =>
@@ -247,10 +275,7 @@ populateProfileList = async () => {
   document.getElementById("profile-likes").className = "nav-link";
   document.getElementById("profile-your").className = "nav-link active";
   try {
-    const uid =
-      sessionStorage.getItem("jokkouid") !== null
-        ? sessionStorage.getItem("jokkouid")
-        : localStorage.getItem("jokkouid");
+    const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
     const likes = await fetch(`https://localhost:5001/api/Like`).then((res) =>
@@ -284,10 +309,7 @@ populateLikes = async () => {
   document.getElementById("profile-your").className = "nav-link";
   document.getElementById("profile-likes").className = "nav-link active";
   try {
-    const uid =
-      sessionStorage.getItem("jokkouid") !== null
-        ? sessionStorage.getItem("jokkouid")
-        : localStorage.getItem("jokkouid");
+    const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
     const likes = await fetch(`https://localhost:5001/api/Like`).then((res) =>
@@ -323,10 +345,7 @@ populateUserList = async () => {
   document.getElementById("profile-likes").className = "nav-link";
   document.getElementById("profile-your").className = "nav-link active";
   try {
-    const uid =
-      sessionStorage.getItem("jokkouid") !== null
-        ? sessionStorage.getItem("jokkouid")
-        : localStorage.getItem("jokkouid");
+    const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
     const likes = await fetch(`https://localhost:5001/api/Like`).then((res) =>
@@ -365,10 +384,7 @@ populateUserLikes = async () => {
   document.getElementById("profile-your").className = "nav-link";
   document.getElementById("profile-likes").className = "nav-link active";
   try {
-    const uid =
-      sessionStorage.getItem("jokkouid") !== null
-        ? sessionStorage.getItem("jokkouid")
-        : localStorage.getItem("jokkouid");
+    const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
     const likes = await fetch(`https://localhost:5001/api/Like`).then((res) =>
@@ -409,10 +425,7 @@ populateUserLikes = async () => {
 
 handleOnSearch = async () => {
   try {
-    const uid =
-      sessionStorage.getItem("jokkouid") !== null
-        ? sessionStorage.getItem("jokkouid")
-        : localStorage.getItem("jokkouid");
+    const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
     const likes = await fetch(`https://localhost:5001/api/Like`).then((res) =>
@@ -478,10 +491,7 @@ onHomeLoad = () => {
 
 onProfileLoad = async () => {
   const users = await fetch(userUrl).then((res) => res.json());
-  const uid =
-    sessionStorage.getItem("jokkouid") !== null
-      ? sessionStorage.getItem("jokkouid")
-      : localStorage.getItem("jokkouid");
+  const uid = getId();
   if (uid !== null) {
     const filteredUsers = users.filter((user) => user.id == uid);
     if (filteredUsers.length > 0) {
