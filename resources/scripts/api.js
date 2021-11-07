@@ -39,7 +39,7 @@ dateFormat = (date) => {
 deleteAccount = async () => {
   const uid = getId();
   if (localStorage.getItem("jokkouid") !== null) {
-    locqalStorage.removeItem("jokkouid");
+    localStorage.removeItem("jokkouid");
   } else {
     sessionStorage.removeItem("jokkouid");
   }
