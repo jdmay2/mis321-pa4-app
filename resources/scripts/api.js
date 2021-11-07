@@ -38,11 +38,7 @@ dateFormat = (date) => {
 
 deleteAccount = async () => {
   const uid = getId();
-  if (localStorage.getItem("jokkouid") !== null) {
-    localStorage.removeItem("jokkouid");
-  } else {
-    sessionStorage.removeItem("jokkouid");
-  }
+  console.log(uid);
   try {
     fetch(`${userUrl}/${uid}`, {
       method: "DELETE",
@@ -56,9 +52,12 @@ deleteAccount = async () => {
       .catch((error) => {
         reject(error);
       });
-    setTimeout(() => {
-      window.location.replace(`/index.html`);
-    }, 200);
+    if (localStorage.getItem("jokkouid") !== null) {
+      localStorage.removeItem("jokkouid");
+    } else {
+      sessionStorage.removeItem("jokkouid");
+    }
+    setTimeout(reload, 200);
   } catch (error) {
     console.log(error);
   }
