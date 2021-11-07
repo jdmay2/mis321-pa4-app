@@ -230,7 +230,7 @@ populatePostList = async () => {
       }
     } else {
       const post = document.createElement("div");
-      post.className = "col-xl-4 animate__animated animate__zoomIn";
+      post.className = "col-xl-4 w-100 animate__animated animate__zoomIn";
       post.innerHTML = `<div id="cd" class="card text-white">
             <div class="card-header text-center">
               There are no posts to display!
@@ -267,7 +267,7 @@ populateProfileList = async () => {
       }
     } else {
       const post = document.createElement("div");
-      post.className = "col-xl-4 animate__animated animate__zoomIn";
+      post.className = "col-xl-4 w-100 animate__animated animate__zoomIn";
       post.innerHTML = `<div id="cd" class="card text-white">
             <div class="card-header text-center">
               There are no posts to display!
@@ -306,7 +306,7 @@ populateLikes = async () => {
       }
     } else {
       const post = document.createElement("div");
-      post.className = "col-xl-4 animate__animated animate__zoomIn";
+      post.className = "col-xl-4 w-100 animate__animated animate__zoomIn";
       post.innerHTML = `<div id="cd" class="card text-white">
             <div class="card-header text-center">
               There are no posts to display!
@@ -347,7 +347,7 @@ populateUserList = async () => {
         }
       } else {
         const post = document.createElement("div");
-        post.className = "col-xl-4 animate__animated animate__zoomIn";
+        post.className = "col-xl-4 w-100 animate__animated animate__zoomIn";
         post.innerHTML = `<div id="cd" class="card text-white">
             <div class="card-header text-center">
               There are no posts to display!
@@ -393,7 +393,7 @@ populateUserLikes = async () => {
         }
       } else {
         const post = document.createElement("div");
-        post.className = "col-xl-4 animate__animated animate__zoomIn";
+        post.className = "col-xl-4 w-100 animate__animated animate__zoomIn";
         post.innerHTML = `<div id="cd" class="card text-white">
             <div class="card-header text-center">
               There are no posts to display!
@@ -441,7 +441,7 @@ handleOnSearch = async () => {
           });
         } else {
           const post = document.createElement("div");
-          post.className = "col-xl-4 animate__animated animate__zoomIn";
+          post.className = "col-xl-4 w-100 animate__animated animate__zoomIn";
           post.innerHTML = `<div id="cd" class="card text-white">
             <div class="card-header text-center">
               No results found
