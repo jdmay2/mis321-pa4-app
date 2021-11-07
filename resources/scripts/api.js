@@ -1,5 +1,5 @@
-const userUrl = `https://localhost:5001/api/User`;
-const postUrl = `https://localhost:5001/api/Post`;
+const userUrl = `https://mis321-pa4-api.herokuapp.com/api/User`;
+const postUrl = `https://mis321-pa4-api.herokuapp.com/api/Post`;
 
 reload = () => {
   window.location.reload();
@@ -243,9 +243,9 @@ populatePostList = async () => {
     const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
-    const likes = await fetch(`https://localhost:5001/api/Like`).then((res) =>
-      res.json()
-    );
+    const likes = await fetch(
+      `https://mis321-pa4-api.herokuapp.com/api/Like`
+    ).then((res) => res.json());
     posts.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
@@ -278,9 +278,9 @@ populateProfileList = async () => {
     const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
-    const likes = await fetch(`https://localhost:5001/api/Like`).then((res) =>
-      res.json()
-    );
+    const likes = await fetch(
+      `https://mis321-pa4-api.herokuapp.com/api/Like`
+    ).then((res) => res.json());
     posts.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
@@ -312,9 +312,9 @@ populateLikes = async () => {
     const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
-    const likes = await fetch(`https://localhost:5001/api/Like`).then((res) =>
-      res.json()
-    );
+    const likes = await fetch(
+      `https://mis321-pa4-api.herokuapp.com/api/Like`
+    ).then((res) => res.json());
     posts.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
@@ -348,9 +348,9 @@ populateUserList = async () => {
     const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
-    const likes = await fetch(`https://localhost:5001/api/Like`).then((res) =>
-      res.json()
-    );
+    const likes = await fetch(
+      `https://mis321-pa4-api.herokuapp.com/api/Like`
+    ).then((res) => res.json());
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     const uID = parseInt(params.jokkouid);
@@ -387,9 +387,9 @@ populateUserLikes = async () => {
     const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
-    const likes = await fetch(`https://localhost:5001/api/Like`).then((res) =>
-      res.json()
-    );
+    const likes = await fetch(
+      `https://mis321-pa4-api.herokuapp.com/api/Like`
+    ).then((res) => res.json());
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     const uID = parseInt(params.jokkouid);
@@ -428,9 +428,9 @@ handleOnSearch = async () => {
     const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
-    const likes = await fetch(`https://localhost:5001/api/Like`).then((res) =>
-      res.json()
-    );
+    const likes = await fetch(
+      `https://mis321-pa4-api.herokuapp.com/api/Like`
+    ).then((res) => res.json());
     posts.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });

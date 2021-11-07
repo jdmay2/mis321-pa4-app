@@ -1,5 +1,4 @@
-const rateUrl = `https://localhost:5001/api/Rating`;
-const likeUrl = `https://localhost:5001/api/Like`;
+const likeUrl = `https://mis321-pa4-api.herokuapp.com/api/Like`;
 
 document.addEventListener("scroll", () => {
   document.documentElement.dataset.scroll = window.scrollY;
