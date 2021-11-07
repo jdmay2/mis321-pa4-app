@@ -88,11 +88,11 @@ like = (id) => {
 };
 
 navHome = () => {
-  window.location.assign(`/Users/josephmay/mis321-pa4-app/client/home.html`);
+  window.location.assign(`/Users/josephmay/mis321-pa4-app/home.html`);
 };
 
 navProfile = () => {
-  window.location.assign(`/Users/josephmay/mis321-pa4-app/client/profile.html`);
+  window.location.assign(`/Users/josephmay/mis321-pa4-app/profile.html`);
 };
 
 navUser = (id) => {
@@ -101,12 +101,10 @@ navUser = (id) => {
       ? sessionStorage.getItem("jokkouid")
       : localStorage.getItem("jokkouid");
   if (uid == id) {
-    window.location.assign(
-      `/Users/josephmay/mis321-pa4-app/client/profile.html`
-    );
+    window.location.assign(`/Users/josephmay/mis321-pa4-app/profile.html`);
   } else {
     window.location.assign(
-      `/Users/josephmay/mis321-pa4-app/client/user.html?jokkouid=${id}`
+      `/Users/josephmay/mis321-pa4-app/user.html?jokkouid=${id}`
     );
   }
 };
@@ -114,5 +112,5 @@ navUser = (id) => {
 signOut = () => {
   localStorage.removeItem("jokkouid");
   sessionStorage.removeItem("jokkouid");
-  window.location.replace(`/Users/josephmay/mis321-pa4-app/client/index.html`);
+  window.location.replace(`/Users/josephmay/mis321-pa4-app/index.html`);
 };
