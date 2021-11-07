@@ -116,8 +116,8 @@ postItem = ({ p, users, likes, uid }) => {
 
 handleOnSubmit = async () => {
   const users = await fetch(userUrl).then((res) => res.json());
-  const email = document.getElementById("userEmail").value;
-  const username = document.getElementById("userName").value;
+  const email = document.getElementById("userEmail").value.toLowerCase();
+  const username = document.getElementById("userName").value.toLowerCase();
   const password = document.getElementById("userPassword").value;
   if (email.length > 0 && username.length > 0 && password.length > 0) {
     if (email.includes("@") && email.includes(".")) {
