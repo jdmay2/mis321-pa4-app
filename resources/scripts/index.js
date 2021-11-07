@@ -56,15 +56,12 @@ postLike = async (id) => {
     }
   } else {
     try {
-      fetch(likeUrl, {
+      fetch(`${likeUrl}/${id}`, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          id: filteredLikes[0].id,
-        }),
       })
         .then((res) => res.text())
         .then((res) => resolve(res ? JSON.parse(res) : {}))
