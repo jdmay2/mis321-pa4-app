@@ -88,11 +88,11 @@ like = (id) => {
 };
 
 navHome = () => {
-  window.location.assign(`/Users/josephmay/mis321-pa4-app/home.html`);
+  window.location.assign(`/home.html`);
 };
 
 navProfile = () => {
-  window.location.assign(`/Users/josephmay/mis321-pa4-app/profile.html`);
+  window.location.assign(`/profile.html`);
 };
 
 navUser = (id) => {
@@ -101,16 +101,14 @@ navUser = (id) => {
       ? sessionStorage.getItem("jokkouid")
       : localStorage.getItem("jokkouid");
   if (uid == id) {
-    window.location.assign(`/Users/josephmay/mis321-pa4-app/profile.html`);
+    window.location.assign(`/profile.html`);
   } else {
-    window.location.assign(
-      `/Users/josephmay/mis321-pa4-app/user.html?jokkouid=${id}`
-    );
+    window.location.assign(`/user.html?jokkouid=${id}`);
   }
 };
 
 signOut = () => {
   localStorage.removeItem("jokkouid");
   sessionStorage.removeItem("jokkouid");
-  window.location.replace(`/Users/josephmay/mis321-pa4-app/index.html`);
+  window.location.replace(`/index.html`);
 };

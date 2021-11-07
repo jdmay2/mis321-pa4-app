@@ -113,7 +113,7 @@ handleOnSubmit = async () => {
             reject(error);
           });
         setTimeout(() => {
-          window.location.replace(`/Users/josephmay/mis321-pa4-app/index.html`);
+          window.location.replace(`/index.html`);
         }, 200);
       } else {
         alert("Username already exists");
@@ -157,7 +157,7 @@ handleOnLogin = async () => {
         } else {
           sessionStorage.setItem("jokkouid", id);
         }
-        window.location.replace(`/Users/josephmay/mis321-pa4-app/home.html`);
+        window.location.replace(`/home.html`);
         console.log(id);
       } else {
         alert("Invalid username or password");
@@ -461,7 +461,7 @@ onIndexLoad = () => {
     localStorage.getItem("jokkouid") !== null ||
     sessionStorage.getItem("jokkouid") !== null
   ) {
-    window.location.replace(`/Users/josephmay/mis321-pa4-app/home.html`);
+    window.location.replace(`/home.html`);
   }
 };
 
@@ -470,7 +470,7 @@ onHomeLoad = () => {
     localStorage.getItem("jokkouid") === null &&
     sessionStorage.getItem("jokkouid") === null
   ) {
-    window.location.replace(`/Users/josephmay/mis321-pa4-app/index.html`);
+    window.location.replace(`/index.html`);
   } else {
     populatePostList();
   }
@@ -489,10 +489,10 @@ onProfileLoad = async () => {
         filteredUsers[0].username;
       populateProfileList();
     } else {
-      window.location.replace(`/Users/josephmay/mis321-pa4-app/index.html`);
+      window.location.replace(`/index.html`);
     }
   } else {
-    window.location.replace(`/Users/josephmay/mis321-pa4-app/index.html`);
+    window.location.replace(`/index.html`);
   }
 };
 
@@ -501,7 +501,7 @@ onUserLoad = async () => {
     localStorage.getItem("jokkouid") === null &&
     sessionStorage.getItem("jokkouid") === null
   ) {
-    window.location.replace(`/Users/josephmay/mis321-pa4-app/index.html`);
+    window.location.replace(`/index.html`);
   } else {
     const users = await fetch(userUrl).then((res) => res.json());
     const urlSearchParams = new URLSearchParams(window.location.search);
@@ -514,10 +514,10 @@ onUserLoad = async () => {
           filteredUsers[0].username;
         populateUserList();
       } else {
-        window.location.replace(`/Users/josephmay/mis321-pa4-app/home.html`);
+        window.location.replace(`/home.html`);
       }
     } else {
-      window.location.replace(`/Users/josephmay/mis321-pa4-app/home.html`);
+      window.location.replace(`/home.html`);
     }
   }
 };
