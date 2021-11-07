@@ -83,8 +83,8 @@ handleDeletePost = async (id) => {
 };
 
 postItem = ({ p, users, likes, uid }) => {
-  const filteredUsers = users.find((user) => user.id == p.userId);
-  const username = filteredUsers[0].username.toLowerCase();
+  const filteredUsers = users.filter((user) => user.id == p.userId);
+  const username = filteredUsers[0].username;
   const post = document.createElement("div");
   post.className = "col-xl-4 animate__animated animate__zoomIn";
   post.innerHTML = `<div id="cd" class="card text-white">
@@ -440,9 +440,13 @@ handleOnSearch = async () => {
         var search = searchBar.value.toLowerCase();
         const filteredPosts = [];
         for (let i = 0; i < posts.length; i++) {
+          const filteredUsers = users.filter(
+            (user) => user.id == posts[i].userId
+          );
+          const username = filteredUsers[0].username;
           if (
             posts[i].text.toLowerCase().includes(search) ||
-            users[posts[i].userId - 1].username.toLowerCase().includes(search)
+            username.toLowerCase().includes(search)
           ) {
             filteredPosts.push(posts[i]);
           }
