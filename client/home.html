@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0000bb" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="resources/css/index.css" />
+    <title>Jokko</title>
+  </head>
+  <body onload="onHomeLoad()" class="body">
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./resources/scripts/index.js"></script>
+    <script src="./resources/scripts/api.js"></script>
+    <nav
+      id="navigation"
+      class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand row" href="#">
+          <img src="./resources/images/jokko-drop.png" alt="" />
+        </a>
+        <form id="search" class="d-flex" onsubmit="return false">
+          <input
+            autofocus
+            id="searchbar"
+            onkeyup="handleOnSearch()"
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </form>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a onclick="navProfile()" class="nav-link">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a onclick="signOut()" class="nav-link">Sign Out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div id="main" class="container-fluid">
+      <ul id="posts" class="col row"></ul>
+      <button
+        id="newPostBtn"
+        class="button"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#postModal"
+      >
+        <svg
+          id="plus-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="whitesmoke"
+          class="bi bi-plus-lg"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="modal fade"
+      id="postModal"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="postModalLabel">New Post</h5>
+            <div id="date">
+              <script>
+                var today = new Date();
+                var hh = today.getHours();
+                var min = today.getMinutes();
+                var ampm = hh >= 12 ? "pm" : "am";
+                hh = hh % 12;
+                hh = hh ? hh : 12;
+                min = min < 10 ? "0" + min : min;
+                var strTime = hh + ":" + min + " " + ampm;
+                today =
+                  today.toLocaleString("default", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  }) +
+                  " " +
+                  strTime;
+                document.getElementById("date").innerHTML = today;
+              </script>
+            </div>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <input
+              id="postInput"
+              type="text"
+              placeholder="What's on your mind?"
+            />
+          </div>
+          <div id="post-button" class="modal-footer">
+            <button
+              onclick="handleOnPost()"
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Post
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
