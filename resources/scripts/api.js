@@ -83,13 +83,13 @@ handleDeletePost = async (id) => {
 };
 
 postItem = ({ p, users, likes, uid }) => {
+  const filteredUsers = users.find((user) => user.id == p.userId);
+  const username = filteredUsers[0].username.toLowerCase();
   const post = document.createElement("div");
   post.className = "col-xl-4 animate__animated animate__zoomIn";
   post.innerHTML = `<div id="cd" class="card text-white">
           <div class="card-header text-center">
-            <a id="user-tag" onclick="navUser(${p.userId})">${users[
-    p.userId - 1
-  ].username.toLowerCase()}</a>
+            <a id="user-tag" onclick="navUser(${p.userId})">${username}</a>
           </div>
           <div class="card-body">
             <div class="card-text">${p.text}</div>
@@ -162,7 +162,7 @@ handleOnSubmit = async () => {
 
 handleOnLogin = async () => {
   const users = await fetch(userUrl).then((res) => res.json());
-  const username = document.getElementById("userName").value;
+  const username = document.getElementById("userName").value.toLowerCase();
   const password = document.getElementById("userPassword").value;
   const check = document.getElementById("check").checked;
   try {
