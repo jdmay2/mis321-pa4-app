@@ -23,6 +23,25 @@ handleSignIn = () => {
   document.getElementById("login-btn-2").style.display = "none";
 };
 
+deleteLike = async (id) => {
+  try {
+    fetch(`${likeUrl}/${id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.text())
+      .then((res) => resolve(res ? JSON.parse(res) : {}))
+      .catch((error) => {
+        reject(error);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 postLike = async (id) => {
   const likes = await fetch(likeUrl).then((res) => res.json());
   const uid =
@@ -55,22 +74,7 @@ postLike = async (id) => {
       console.log(err);
     }
   } else {
-    try {
-      fetch(`${likeUrl}/${id}`, {
-        method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.text())
-        .then((res) => resolve(res ? JSON.parse(res) : {}))
-        .catch((error) => {
-          reject(error);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+    deleteLike(filteredLikes[0].id);
   }
 };
 
