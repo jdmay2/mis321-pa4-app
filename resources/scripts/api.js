@@ -340,6 +340,8 @@ populatePostList = async () => {
       return new Date(b.date) - new Date(a.date);
     });
     document.getElementById("posts").innerHTML = "";
+    document.getElementById("sub-spinner").style.display = "none";
+    document.getElementById("spinner").style.display = "none";
     if (posts.length > 0) {
       for (let i = 0; i < posts.length; i++) {
         setTimeout(() => {
@@ -376,6 +378,8 @@ populateProfileList = async () => {
     });
     const filteredPosts = posts.filter((post) => post.userId == uid);
     document.getElementById("posts").innerHTML = "";
+    document.getElementById("sub-spinner").style.display = "none";
+    document.getElementById("spinner").style.display = "none";
     if (filteredPosts.length > 0) {
       for (let i = 0; i < filteredPosts.length; i++) {
         postItem({ p: filteredPosts[i], posts, users, likes, uid });
@@ -412,6 +416,8 @@ populateLikes = async () => {
     const likePostIds = filteredLikes.map((like) => like.postId);
     const filteredPosts = posts.filter((post) => likePostIds.includes(post.id));
     document.getElementById("posts").innerHTML = "";
+    document.getElementById("sub-spinner").style.display = "none";
+    document.getElementById("spinner").style.display = "none";
     if (filteredPosts.length > 0) {
       for (let i = 0; i < filteredPosts.length; i++) {
         postItem({ p: filteredPosts[i], posts, users, likes, uid });
@@ -450,6 +456,8 @@ populateUserList = async () => {
     if (uID !== null) {
       const filteredPosts = posts.filter((post) => post.userId === uID);
       document.getElementById("posts").innerHTML = "";
+      document.getElementById("sub-spinner").style.display = "none";
+      document.getElementById("spinner").style.display = "none";
       if (filteredPosts.length > 0) {
         for (let i = 0; i < filteredPosts.length; i++) {
           postItem({ p: filteredPosts[i], posts, users, likes, uid });
@@ -493,6 +501,8 @@ populateUserLikes = async () => {
         likePostIds.includes(post.id)
       );
       document.getElementById("posts").innerHTML = "";
+      document.getElementById("sub-spinner").style.display = "none";
+      document.getElementById("spinner").style.display = "none";
       if (filteredPosts.length > 0) {
         for (let i = 0; i < filteredPosts.length; i++) {
           postItem({ p: filteredPosts[i], posts, users, likes, uid });
@@ -542,6 +552,8 @@ handleOnSearch = async () => {
           }
         }
         document.getElementById("posts").innerHTML = "";
+        document.getElementById("sub-spinner").style.display = "none";
+        document.getElementById("spinner").style.display = "none";
         if (filteredPosts.length > 0) {
           filteredPosts.forEach((p) => {
             postItem({ p: p, posts, users, likes, uid });
