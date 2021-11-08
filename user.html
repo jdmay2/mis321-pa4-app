@@ -151,5 +151,67 @@
         </div>
       </div>
     </div>
+    <div
+      class="modal fade"
+      id="repostModal"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="postModalLabel">New Post</h5>
+            <div id="repostDate">
+              <script>
+                var today = new Date();
+                var hh = today.getHours();
+                var min = today.getMinutes();
+                var ampm = hh >= 12 ? "pm" : "am";
+                hh = hh % 12;
+                hh = hh ? hh : 12;
+                min = min < 10 ? "0" + min : min;
+                var strTime = hh + ":" + min + " " + ampm;
+                today =
+                  today.toLocaleString("default", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  }) +
+                  " " +
+                  strTime;
+                document.getElementById("repostDate").innerHTML = today;
+              </script>
+            </div>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div id="sub-post"></div>
+            <textarea
+              id="repostInput"
+              type="text"
+              placeholder="Thoughts?"
+              maxlength="500"
+            ></textarea>
+          </div>
+          <div id="repost-button" class="modal-footer">
+            <button
+              onclick="handleRepost()"
+              type="button"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
+              Post
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

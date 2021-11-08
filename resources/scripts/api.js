@@ -83,8 +83,15 @@ handleDeletePost = async (id) => {
   }
 };
 
-postItem = ({ p, users, likes, uid }) => {
+postItem = ({ p, posts, users, likes, uid }) => {
+  const filteredPosts = posts.filter((post) => post.id == p.subId);
+  const subPost = filteredPosts[0];
   const filteredUsers = users.filter((user) => user.id == p.userId);
+  const filteredUsers2 =
+    subPost !== undefined
+      ? users.filter((user) => user.id == subPost.userId)
+      : [];
+  const subUser = filteredUsers2[0];
   const username = filteredUsers[0].username;
   const post = document.createElement("div");
   post.className = "col-xl-4 animate__animated animate__zoomIn";
@@ -92,20 +99,43 @@ postItem = ({ p, users, likes, uid }) => {
           <div class="card-header text-center">
             <a id="user-tag" onclick="navUser(${p.userId})">${username}</a>
           </div>
+          ${
+            p.subId == 0
+              ? ""
+              : `<div id="sub-post-body" class="col-xl-4">
+              <div id="sub-cd" class="card text-white">
+              <div class="card-header text-center">
+                <a id="user-tag" onclick="navUser(${subPost.userId})">${
+                  subUser.username
+                }</a>
+              </div>
+              <div class="card-body">
+                <div class="card-text">${subPost.text}</div>
+              </div>
+              <div class="card-footer text-center">
+                ${dateFormat(subPost.date)}
+              </div>
+            </div>
+              </div>`
+          }
           <div class="card-body">
-            <div class="card-text">${p.text}</div>
-            <div id="rating">
-              ${
-                p.userId == uid
-                  ? `<i id="like-${p.id}" class="bi bi-trash-fill" onclick="handleDeletePost(${p.id})"></i>`
-                  : `<i id="like-${p.id}" class="bi ${
-                      likes.filter(
-                        (like) => like.postId == p.id && like.userId == uid
-                      ).length > 0
-                        ? "bi-heart-fill"
-                        : "bi-heart"
-                    }" onclick="like(${p.id})"></i>`
-              }
+              <div class="card-text">${p.text}</div>
+              <div id="rating">
+                ${
+                  p.userId == uid
+                    ? `<i id="like-${p.id}" class="bi bi-trash-fill" onclick="handleDeletePost(${p.id})"></i>`
+                    : `<i id="like-${p.id}" class="bi ${
+                        likes.filter(
+                          (like) => like.postId == p.id && like.userId == uid
+                        ).length > 0
+                          ? "bi-heart-fill"
+                          : "bi-heart"
+                      }" onclick="like(${p.id})"></i>
+                      <i class="bi bi-arrow-repeat" data-bs-toggle="modal"
+                      data-bs-target="#repostModal" onclick="repost(${
+                        p.id
+                      })"></i>`
+                }
             </div>
           </div>
           <div class="card-footer text-center">
@@ -113,6 +143,31 @@ postItem = ({ p, users, likes, uid }) => {
           </div>
         </div>`;
   document.getElementById("posts").appendChild(post);
+};
+
+repost = async (id) => {
+  document.getElementById("sub-post").innerHTML = "";
+  const posts = await fetch(postUrl).then((res) => res.json());
+  const users = await fetch(userUrl).then((res) => res.json());
+  const filteredPosts = posts.filter((post) => post.id == id);
+  const p = filteredPosts[0];
+  const filteredUsers = users.filter((user) => user.id == p.userId);
+  const subUser = filteredUsers[0];
+  const post = document.createElement("div");
+  post.className = "col-xl-4";
+  post.innerHTML = `<div id="cd" class="card text-white">
+  <div class="card-header text-center">
+    <p id="postId">${p.id}</p>
+    <a id="user-tag" onclick="navUser(${p.userId})">${subUser.username}</a>
+  </div>
+  <div class="card-body">
+    <div class="card-text">${p.text}</div>
+  </div>
+  <div class="card-footer text-center">
+    ${dateFormat(p.date)}
+  </div>
+</div>`;
+  document.getElementById("sub-post").appendChild(post);
 };
 
 handleOnSubmit = async () => {
@@ -239,6 +294,40 @@ handleOnPost = async () => {
   }
 };
 
+handleRepost = async () => {
+  const uid = getId();
+  const pid = parseInt(document.getElementById("postId").innerText);
+  const text = document.getElementById("repostInput").value;
+  const date = new Date().toISOString();
+  try {
+    if (text.length > 0) {
+      fetch(postUrl, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: uid,
+          subId: pid,
+          text: text,
+          date: date,
+        }),
+      })
+        .then((res) => res.text())
+        .then((res) => resolve(res ? JSON.parse(res) : {}))
+        .catch((error) => {
+          reject(error);
+        });
+      setTimeout(reload, 300);
+    } else {
+      alert("You have not typed anything!");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 populatePostList = async () => {
   try {
     const uid = getId();
@@ -254,7 +343,7 @@ populatePostList = async () => {
     if (posts.length > 0) {
       for (let i = 0; i < posts.length; i++) {
         setTimeout(() => {
-          postItem({ p: posts[i], users, likes, uid });
+          postItem({ p: posts[i], posts, users, likes, uid });
         }, i * 100);
       }
     } else {
@@ -289,7 +378,7 @@ populateProfileList = async () => {
     document.getElementById("posts").innerHTML = "";
     if (filteredPosts.length > 0) {
       for (let i = 0; i < filteredPosts.length; i++) {
-        postItem({ p: filteredPosts[i], users, likes, uid });
+        postItem({ p: filteredPosts[i], posts, users, likes, uid });
       }
     } else {
       const post = document.createElement("div");
@@ -325,7 +414,7 @@ populateLikes = async () => {
     document.getElementById("posts").innerHTML = "";
     if (filteredPosts.length > 0) {
       for (let i = 0; i < filteredPosts.length; i++) {
-        postItem({ p: filteredPosts[i], users, likes, uid });
+        postItem({ p: filteredPosts[i], posts, users, likes, uid });
       }
     } else {
       const post = document.createElement("div");
@@ -363,7 +452,7 @@ populateUserList = async () => {
       document.getElementById("posts").innerHTML = "";
       if (filteredPosts.length > 0) {
         for (let i = 0; i < filteredPosts.length; i++) {
-          postItem({ p: filteredPosts[i], users, likes, uid });
+          postItem({ p: filteredPosts[i], posts, users, likes, uid });
         }
       } else {
         const post = document.createElement("div");
@@ -406,7 +495,7 @@ populateUserLikes = async () => {
       document.getElementById("posts").innerHTML = "";
       if (filteredPosts.length > 0) {
         for (let i = 0; i < filteredPosts.length; i++) {
-          postItem({ p: filteredPosts[i], users, likes, uid });
+          postItem({ p: filteredPosts[i], posts, users, likes, uid });
         }
       } else {
         const post = document.createElement("div");
@@ -455,7 +544,7 @@ handleOnSearch = async () => {
         document.getElementById("posts").innerHTML = "";
         if (filteredPosts.length > 0) {
           filteredPosts.forEach((p) => {
-            postItem({ p: p, users, likes, uid });
+            postItem({ p: p, posts, users, likes, uid });
           });
         } else {
           const post = document.createElement("div");
