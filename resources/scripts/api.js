@@ -57,7 +57,7 @@ deleteAccount = async () => {
     } else {
       sessionStorage.removeItem("jokkouid");
     }
-    setTimeout(reload, 200);
+    setTimeout(reload, 400);
   } catch (error) {
     console.log(error);
   }
@@ -77,7 +77,7 @@ handleDeletePost = async (id) => {
       .catch((error) => {
         reject(error);
       });
-    setTimeout(reload, 300);
+    setTimeout(reload, 400);
   } catch (error) {
     console.log(error);
   }
@@ -243,7 +243,7 @@ handleOnSubmit = async () => {
           });
         setTimeout(() => {
           window.location.replace(`/index.html`);
-        }, 200);
+        }, 300);
       } else {
         alert("Username already exists");
       }
@@ -324,7 +324,7 @@ handleOnPost = async () => {
         .catch((error) => {
           reject(error);
         });
-      setTimeout(reload, 200);
+      setTimeout(reload, 400);
     } else {
       alert("You have not typed anything!");
     }
@@ -358,7 +358,7 @@ handleRepost = async () => {
         .catch((error) => {
           reject(error);
         });
-      setTimeout(reload, 300);
+      setTimeout(reload, 400);
     } else {
       alert("You have not typed anything!");
     }

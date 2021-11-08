@@ -467,6 +467,10 @@ input::-webkit-search-cancel-button {
   display: none;
 }
 
+#editPostId {
+  display: none;
+}
+
 .modal-dialog .modal-content {
   border-radius: 25px 25px 0px 0px;
   background-color: #00000000;
