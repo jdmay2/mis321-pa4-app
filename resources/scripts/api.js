@@ -77,9 +77,46 @@ handleDeletePost = async (id) => {
       .catch((error) => {
         reject(error);
       });
-    setTimeout(reload, 200);
+    setTimeout(reload, 300);
   } catch (error) {
     console.log(error);
+  }
+};
+
+handleEditPost = async (id) => {
+  document.getElementById("sub-post").innerHTML = "";
+  const posts = await fetch(postUrl).then((res) => res.json());
+  const users = await fetch(userUrl).then((res) => res.json());
+  const filteredPosts = posts.filter((post) => post.id == id);
+  const p = filteredPosts[0];
+  const filteredPosts2 = posts.filter((post) => post.id == p.subId);
+  const sp = filteredPosts2.length > 0 ? filteredPosts2[0] : null;
+  const filteredUsers2 = sp
+    ? users.filter((user) => user.id == p.userId)
+    : null;
+  const subUser = filteredUsers2.length > 0 ? filteredUsers2[0] : null;
+  if (sp) {
+    const post = document.createElement("div");
+    post.className = "col-xl-4";
+    post.innerHTML = `<div id="cd" class="card text-white">
+    <div class="card-header text-center">
+      <p id="editPostId">${p.id}</p>
+      <a id="user-tag" onclick="navUser(${sp.userId})">${subUser.username}</a>
+    </div>
+    <div class="card-body">
+      <div class="card-text">${sp.text}</div>
+    </div>
+    <div class="card-footer text-center">
+      ${dateFormat(sp.date)}
+    </div>
+  </div>`;
+    document.getElementById("edit-sub-post").appendChild(post);
+    document.getElementById("editInput").value = p.text;
+  } else {
+    document.getElementById(
+      "edit-sub-post"
+    ).innerHTML = `<p id="editPostId">${p.id}</p>`;
+    document.getElementById("editInput").value = p.text;
   }
 };
 
@@ -123,7 +160,9 @@ postItem = ({ p, posts, users, likes, uid }) => {
               <div id="rating">
                 ${
                   p.userId == uid
-                    ? `<i id="like-${p.id}" class="bi bi-trash-fill" onclick="handleDeletePost(${p.id})"></i>`
+                    ? `<i id="like-${p.id}" class="bi bi-trash-fill" onclick="handleDeletePost(${p.id})"></i>
+                      <i class="bi bi-pencil-square" data-bs-toggle="modal"
+                      data-bs-target="#editModal" onclick="handleEditPost(${p.id})"></i>`
                     : `<i id="like-${p.id}" class="bi ${
                         likes.filter(
                           (like) => like.postId == p.id && like.userId == uid
@@ -320,6 +359,38 @@ handleRepost = async () => {
           reject(error);
         });
       setTimeout(reload, 300);
+    } else {
+      alert("You have not typed anything!");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+handleOnEdit = async () => {
+  const pid = parseInt(document.getElementById("editPostId").innerText);
+  const text = document.getElementById("editInput").value;
+  console.log(pid);
+  console.log(text);
+  try {
+    if (text.length > 0) {
+      fetch(postUrl, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: pid,
+          text: text,
+        }),
+      })
+        .then((res) => res.text())
+        .then((res) => resolve(res ? JSON.parse(res) : {}))
+        .catch((error) => {
+          reject(error);
+        });
+      setTimeout(reload, 400);
     } else {
       alert("You have not typed anything!");
     }
