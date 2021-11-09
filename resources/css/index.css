@@ -201,6 +201,7 @@ input::-webkit-search-cancel-button {
   border: 0px;
   background-image: linear-gradient(to top, #ff5607, #f6412d, #d40047, #4f00b6);
   background-attachment: fixed;
+  box-shadow: 4px 4px 8px #00000070;
 }
 
 .card-body {
@@ -215,17 +216,16 @@ input::-webkit-search-cancel-button {
 #sub-post-body {
   display: flex;
   flex-direction: row;
-  flex-grow: 1;
+  width: 100%;
   justify-content: stretch;
+  align-self: center;
   align-items: center;
   margin-left: 10pt;
   margin-right: 10pt;
   margin-top: 10pt;
-  padding-left: 0pt;
-  padding-right: 0pt;
+  padding-left: 10pt;
+  padding-right: 10pt;
   padding-bottom: 0pt;
-  border-radius: 15pt;
-  box-shadow: 4px 4px 8px #00000070;
 }
 
 .card-text {
