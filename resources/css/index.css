@@ -248,6 +248,11 @@ input::-webkit-search-cancel-button {
   margin-left: 2pt;
 }
 
+#rating .bi-heart,
+.bi-heart-fill {
+  margin-right: 2pt;
+}
+
 #rating .bi:hover {
   transform: scale(1.2);
 }
