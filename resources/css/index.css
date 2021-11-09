@@ -250,7 +250,7 @@ input::-webkit-search-cancel-button {
 
 #rating .bi-heart,
 .bi-heart-fill {
-  margin-right: 2pt;
+  margin-right: 1pt;
 }
 
 #rating .bi:hover {
