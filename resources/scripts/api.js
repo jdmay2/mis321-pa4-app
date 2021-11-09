@@ -193,7 +193,7 @@ repost = async (id) => {
   const filteredUsers = users.filter((user) => user.id == p.userId);
   const subUser = filteredUsers[0];
   const post = document.createElement("div");
-  post.className = "col-xl-4";
+  post.className = "row-xl-4";
   post.innerHTML = `<div id="cd" class="card text-white">
   <div class="card-header text-center">
     <p id="postId">${p.id}</p>
