@@ -116,14 +116,13 @@
   height: auto;
 }
 
-/* #logo2 {
-  width: 15%;
-  height: auto;
-} */
-
 .navbar-toggler {
   border-radius: 10px;
   border: none;
+  box-shadow: 4px 4px 8px #00000070;
+}
+
+.navbar-toggler:focus {
   box-shadow: 4px 4px 8px #00000070;
 }
 
