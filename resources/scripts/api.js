@@ -57,7 +57,7 @@ deleteAccount = async () => {
     } else {
       sessionStorage.removeItem("jokkouid");
     }
-    setTimeout(reload, 400);
+    setTimeout(reload, 500);
   } catch (error) {
     console.log(error);
   }
@@ -77,7 +77,7 @@ handleDeletePost = async (id) => {
       .catch((error) => {
         reject(error);
       });
-    setTimeout(reload, 400);
+    setTimeout(reload, 500);
   } catch (error) {
     console.log(error);
   }
@@ -324,7 +324,7 @@ handleOnPost = async () => {
         .catch((error) => {
           reject(error);
         });
-      setTimeout(reload, 400);
+      setTimeout(reload, 500);
     } else {
       alert("You have not typed anything!");
     }
@@ -358,7 +358,7 @@ handleRepost = async () => {
         .catch((error) => {
           reject(error);
         });
-      setTimeout(reload, 400);
+      setTimeout(reload, 500);
     } else {
       alert("You have not typed anything!");
     }
@@ -390,7 +390,7 @@ handleOnEdit = async () => {
         .catch((error) => {
           reject(error);
         });
-      setTimeout(reload, 400);
+      setTimeout(reload, 500);
     } else {
       alert("You have not typed anything!");
     }
