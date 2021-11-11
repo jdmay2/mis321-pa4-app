@@ -111,6 +111,18 @@ navProfile = () => {
   }
 };
 
+navChat = () => {
+  const uid =
+    sessionStorage.getItem("jokkouid") !== null
+      ? sessionStorage.getItem("jokkouid")
+      : localStorage.getItem("jokkouid");
+  if (uid !== null) {
+    window.location.assign(`/chat.html`);
+  } else {
+    window.location.assign(`/index.html`);
+  }
+};
+
 navUser = (id) => {
   const uid =
     sessionStorage.getItem("jokkouid") !== null
