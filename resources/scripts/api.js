@@ -1,5 +1,7 @@
 const userUrl = `https://mis321-pa4-api.herokuapp.com/api/User`;
 const postUrl = `https://mis321-pa4-api.herokuapp.com/api/Post`;
+const chatUrl = `https://mis321-pa4-api.herokuapp.com/api/Chat`;
+const messageUrl = `https://mis321-pa4-api.herokuapp.com/api/Message`;
 
 reload = () => {
   window.location.reload();
@@ -708,3 +710,291 @@ onUserLoad = async () => {
     }
   }
 };
+
+// Start of chat script
+
+onChatLoad = async () => {
+  const users = await fetch(userUrl).then((res) => res.json());
+  const uid = getId();
+  if (uid !== null) {
+    const filteredUsers = users.filter((user) => user.id != uid);
+    if (filteredUsers.length > 0) {
+      filteredUsers.forEach((u) => {
+        popUserSearch({ u: u });
+      });
+    }
+  } else {
+    window.location.replace(`/index.html`);
+  }
+};
+
+popUserSearch = ({ u }) => {
+  const user = document.createElement("div");
+  user.className = "row";
+  user.onclick = () => {
+    loadMessages(u.id);
+  };
+  user.innerHTML = `<div id="user-cd-${u.id}" class="col text-white">
+            <div class="text-center">${u.username}
+            </div>
+          </div>`;
+  document.getElementById("users").appendChild(user);
+};
+
+handleUserSearch = async () => {
+  try {
+    const us = await fetch(userUrl).then((res) => res.json());
+    const uid = getId();
+    const users = us.filter((user) => user.id != uid);
+    const searchBar = document.getElementById("user-searchbar");
+    searchBar.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") {
+        var search = searchBar.value.toLowerCase();
+        const filteredUsers = [];
+        for (let i = 0; i < users.length; i++) {
+          if (users[i].username.toLowerCase().includes(search)) {
+            filteredUsers.push(users[i]);
+          }
+        }
+        document.getElementById("users").innerHTML = "";
+        if (filteredUsers.length > 0) {
+          filteredUsers.forEach((u) => {
+            popUserSearch({ u: u });
+          });
+        }
+      } else {
+        var search = searchBar.value.toLowerCase();
+        const filteredUsers = [];
+        for (let i = 0; i < users.length; i++) {
+          if (users[i].username.toLowerCase().includes(search)) {
+            filteredUsers.push(users[i]);
+          }
+        }
+        document.getElementById("users").innerHTML = "";
+        if (filteredUsers.length > 0) {
+          filteredUsers.forEach((u) => {
+            popUserSearch({ u: u });
+          });
+        } else {
+          const user = document.createElement("div");
+          user.className = "row";
+          user.ariaDisabled = true;
+          user.innerHTML = `<div id="user-cd" class="col text-white">
+            <div class="text-center"> No results found
+            </div>
+          </div>`;
+          document.getElementById("users").appendChild(user);
+        }
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+loadMessages = async (uID) => {
+  try {
+    const uid = getId();
+    const chats = await fetch(chatUrl).then((res) => res.json());
+    const messages = await fetch(messageUrl).then((res) => res.json());
+    const filteredChat = chats.filter(
+      (chat) =>
+        (chat.userOneId == uid && chat.userTwoId == uID) ||
+        (chat.userOneId == uID && chat.userTwoId == uid)
+    );
+    const chat = filteredChat[0] || null;
+    if (document.getElementById("secondary-id")) {
+      document.getElementById("secondary-id").remove();
+    }
+    if (document.getElementById("chat-id")) {
+      document.getElementById("chat-id").remove();
+    }
+    const secondaryId = document.createElement("div");
+    secondaryId.style.display = "none";
+    secondaryId.id = "secondary-id";
+    secondaryId.innerHTML = uID;
+    document.getElementById("message-column").appendChild(secondaryId);
+    document.getElementById("messages").innerHTML = "";
+    if (chat != null) {
+      const chatId = document.createElement("div");
+      chatId.style.display = "none";
+      chatId.id = "chat-id";
+      chatId.innerHTML = chat.id;
+      document.getElementById("message-column").appendChild(chatId);
+      const filteredMessages = messages.filter(
+        (message) => message.chatId == chat.id
+      );
+      document.getElementById("messages").innerHTML = "";
+      if (filteredMessages.length > 0) {
+        filteredMessages.forEach((m) => {
+          if (m.userId == uid) {
+            const message = document.createElement("div");
+            message.className = "col-6 align-self-end";
+            message.innerHTML = `<div class="col-xl-12 w-100">
+                <div class="text-white">
+                  <div class="text-center">
+                    ${m.text}
+                  </div>
+                </div>
+                <div class="date me-2">${dateFormat(m.date)}</div>
+              </div>`;
+            document.getElementById("messages").appendChild(message);
+            document.getElementById("messages").scrollTop =
+              document.getElementById("messages").scrollHeight;
+          } else {
+            const message = document.createElement("div");
+            message.className = "col-6 align-self-start";
+            message.innerHTML = `<div class="col-xl-12 w-100">
+                <div class="bg-secondary text-white">
+                  <div class="text-center">
+                    ${m.text}
+                  </div>
+                </div>
+                <div class="date me-2">${dateFormat(m.date)}</div>
+              </div>`;
+            document.getElementById("messages").appendChild(message);
+            document.getElementById("messages").scrollTop =
+              document.getElementById("messages").scrollHeight;
+          }
+        });
+      } else {
+        document.getElementById("messages").innerHTML = "";
+        const message = document.createElement("div");
+        message.className = "col-xl-4 w-100";
+        message.innerHTML = `<div id="cd" class="card text-white">
+              <div class="card-header text-center">
+                No messages found, start a conversation
+              </div>
+            </div>`;
+        document.getElementById("messages").appendChild(message);
+      }
+    } else {
+      document.getElementById("messages").innerHTML = "";
+      const message = document.createElement("div");
+      message.className = "col-xl-4 w-100";
+      message.innerHTML = `<div id="cd" class="card text-white">
+              <div class="card-header text-center">
+                Send a message to start a chat
+              </div>
+            </div>`;
+      document.getElementById("messages").appendChild(message);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+sendMessage = async () => {
+  if (document.getElementById("message-input-box").value != "") {
+    if (document.getElementById("secondary-id")) {
+      try {
+        const uid = getId();
+        const chats = await fetch(chatUrl).then((res) => res.json());
+        const messages = await fetch(messageUrl).then((res) => res.json());
+        const uTwoId = parseInt(
+          document.getElementById("secondary-id").innerHTML
+        );
+        const chatId = document.getElementById("chat-id")
+          ? parseInt(document.getElementById("chat-id").innerHTML)
+          : null;
+        if (chatId) {
+          const message = document.createElement("div");
+          message.className = "col-6 align-self-end";
+          message.innerHTML = `<div class="col-xl-12 w-100">
+          <div class="text-white">
+            <div class="text-center">
+              ${document.getElementById("message-input-box").value}
+            </div>
+          </div>
+          <div class="date me-2">${dateFormat(new Date())}</div>
+        </div>`;
+          document.getElementById("messages").appendChild(message);
+          document.getElementById("messages").scrollTop =
+            document.getElementById("messages").scrollHeight;
+          const messageToSend = {
+            chatId: chatId,
+            userId: uid,
+            date: new Date().toISOString(),
+            text: document.getElementById("message-input-box").value,
+          };
+          document.getElementById("message-input-box").value = "";
+          fetch(messageUrl, {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(messageToSend),
+          })
+            .then((res) => res.text())
+            .then((res) => resolve(res ? JSON.parse(res) : {}))
+            .catch((error) => {
+              reject(error);
+            });
+          messages.push(messageToSend);
+        } else {
+          const chatToSend = {
+            userOneId: uid,
+            userTwoId: uTwoId,
+          };
+          fetch(chatUrl, {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(chatToSend),
+          })
+            .then((res) => res.text())
+            .then((res) => resolve(res ? JSON.parse(res) : {}))
+            .catch((error) => {
+              reject(error);
+            });
+          chats.push(chatToSend);
+          const chats2 = await fetch(chatUrl).then((res) => res.json());
+          const filteredChats = chats2.filter(
+            (chat) => chat.userOneId == uid && chat.userTwoId == uTwoId
+          );
+          const chat = filteredChats[0];
+          const message = document.createElement("div");
+          message.className = "col-6 align-self-end";
+          message.innerHTML = `<div class="col-xl-12 w-100">
+          <div class="text-white">
+            <div class="text-center">
+              ${document.getElementById("message-input-box").value}
+            </div>
+          </div>
+          <div class="date me-2">${dateFormat(new Date())}</div>
+        </div>`;
+          document.getElementById("messages").appendChild(message);
+          document.getElementById("messages").scrollTop =
+            document.getElementById("messages").scrollHeight;
+          const messageToSend = {
+            chatId: chat.id,
+            userId: uid,
+            text: document.getElementById("message-input-box").value,
+            date: new Date().toISOString(),
+          };
+          document.getElementById("message-input-box").value = "";
+          fetch(messageUrl, {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(messageToSend),
+          })
+            .then((res) => res.text())
+            .then((res) => resolve(res ? JSON.parse(res) : {}))
+            .catch((error) => {
+              reject(error);
+            });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+};
+
+//end of chat script
