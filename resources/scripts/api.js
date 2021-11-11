@@ -885,7 +885,9 @@ loadMessages = async (uID) => {
 };
 
 sendMessage = async () => {
-  if (document.getElementById("message-input-box").value != "") {
+  var inputBox = document.getElementById("message-input-box");
+  var ms = document.getElementById("messages");
+  if (inputBox.value != "") {
     if (document.getElementById("secondary-id")) {
       try {
         const uid = getId();
@@ -903,34 +905,21 @@ sendMessage = async () => {
           message.innerHTML = `<div class="col-xl-12 w-100">
           <div class="text-white">
             <div class="text-center">
-              ${document.getElementById("message-input-box").value}
+              ${inputBox.value}
             </div>
           </div>
           <div class="date me-2">${dateFormat(new Date().toISOString())}</div>
         </div>`;
-          document.getElementById("messages").appendChild(message);
-          document.getElementById("messages").scrollTop =
-            document.getElementById("messages").scrollHeight;
+          ms.appendChild(message);
+          ms.scrollTop = ms.scrollHeight;
           const messageToSend = {
             chatId: chatId,
             userId: uid,
             date: new Date().toISOString(),
-            text: document.getElementById("message-input-box").value,
+            text: inputBox.value,
           };
-          document.getElementById("message-input-box").value = "";
-          fetch(messageUrl, {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(messageToSend),
-          })
-            .then((res) => res.text())
-            .then((res) => resolve(res ? JSON.parse(res) : {}))
-            .catch((error) => {
-              reject(error);
-            });
+          inputBox.value = "";
+          postChat(messageToSend);
           messages.push(messageToSend);
         } else {
           const chatToSend = {
@@ -961,39 +950,46 @@ sendMessage = async () => {
           message.innerHTML = `<div class="col-xl-12 w-100">
           <div class="text-white">
             <div class="text-center">
-              ${document.getElementById("message-input-box").value}
+              ${inputBox.value}
             </div>
           </div>
           <div class="date me-2">${dateFormat(new Date().toISOString())}</div>
         </div>`;
-          document.getElementById("messages").appendChild(message);
-          document.getElementById("messages").scrollTop =
-            document.getElementById("messages").scrollHeight;
+          ms.appendChild(message);
+          ms.scrollTop = ms.scrollHeight;
           const messageToSend = {
             chatId: chat.id,
             userId: uid,
-            text: document.getElementById("message-input-box").value,
+            text: inputBox.value,
             date: new Date().toISOString(),
           };
-          document.getElementById("message-input-box").value = "";
-          fetch(messageUrl, {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(messageToSend),
-          })
-            .then((res) => res.text())
-            .then((res) => resolve(res ? JSON.parse(res) : {}))
-            .catch((error) => {
-              reject(error);
-            });
+          inputBox.value = "";
+          postChat(messageToSend);
         }
       } catch (error) {
         console.error(error);
       }
     }
+  }
+};
+
+postChat = async (message) => {
+  try {
+    await fetch(messageUrl, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(message),
+    })
+      .then((res) => res.text())
+      .then((res) => resolve(res ? JSON.parse(res) : {}))
+      .catch((error) => {
+        reject(error);
+      });
+  } catch (error) {
+    console.error(error);
   }
 };
 

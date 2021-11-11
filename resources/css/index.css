@@ -54,6 +54,7 @@
   background-size: 100vh 100vh;
   background-attachment: fixed;
   height: 100%;
+  width: 100%;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -503,8 +504,7 @@ input::-webkit-search-cancel-button {
   color: whitesmoke;
 }
 
-#postModal,
-#repostModal .modal-dialog .modal-content .modal-header {
+.modal-dialog .modal-content .modal-header {
   background-color: none;
   border-radius: 25px 25px 0px 0px;
   border-bottom: 0 none;
@@ -704,6 +704,7 @@ input::-webkit-search-cancel-button {
 
 #deleteModal .modal-dialog .modal-content .modal-header {
   background-color: transparent;
+  background-image: none;
   border-radius: 25px 25px 0px 0px;
   border-bottom: 0 none;
   padding-left: 20px;
