@@ -917,6 +917,11 @@ input::-webkit-search-cancel-button {
   background-attachment: fixed;
 }
 
+#messages .col-6 .col-xl-12 #secondary {
+  background-image: linear-gradient(to top, #131313, #313131);
+  background-attachment: fixed;
+}
+
 #messages .col-6 .col-xl-12 .date {
   font-size: small;
   color: #ffffff50;

@@ -845,7 +845,7 @@ loadMessages = async (uID) => {
             const message = document.createElement("div");
             message.className = "col-6 align-self-start";
             message.innerHTML = `<div class="col-xl-12 w-100">
-                <div class="bg-secondary text-white">
+                <div id="secondary" class="text-white">
                   <div class="text-center">
                     ${m.text}
                   </div>
@@ -906,7 +906,7 @@ sendMessage = async () => {
               ${document.getElementById("message-input-box").value}
             </div>
           </div>
-          <div class="date me-2">${dateFormat(new Date())}</div>
+          <div class="date me-2">${dateFormat(new Date().toISOString())}</div>
         </div>`;
           document.getElementById("messages").appendChild(message);
           document.getElementById("messages").scrollTop =
@@ -964,7 +964,7 @@ sendMessage = async () => {
               ${document.getElementById("message-input-box").value}
             </div>
           </div>
-          <div class="date me-2">${dateFormat(new Date())}</div>
+          <div class="date me-2">${dateFormat(new Date().toISOString())}</div>
         </div>`;
           document.getElementById("messages").appendChild(message);
           document.getElementById("messages").scrollTop =
