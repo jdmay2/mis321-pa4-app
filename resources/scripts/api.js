@@ -7,17 +7,27 @@ reload = () => {
   window.location.reload();
 };
 
+refresh = () => {
+  if (document.URL.includes("home.html")) {
+    populatePostList();
+  } else if (document.URL.includes("profile.html")) {
+    populateProfileList();
+  } else if (document.URL.includes("user.html")) {
+    populateUserList();
+  }
+};
+
 getId = () => {
   const uid =
     sessionStorage.getItem("jokkouid") !== null
       ? sessionStorage.getItem("jokkouid")
       : localStorage.getItem("jokkouid");
-  return uid;
+  return parseInt(uid);
 };
 
 dateFormat = (date) => {
   var date = new Date(date);
-  var hh = date.getHours() - 5;
+  var hh = date.getHours() - 6;
   if (hh < 0) {
     hh = 24 + hh;
   }
@@ -50,16 +60,14 @@ deleteAccount = async () => {
       },
     })
       .then((res) => res.text())
-      .then((res) => resolve(res ? JSON.parse(res) : {}))
-      .catch((error) => {
-        reject(error);
-      });
-    if (localStorage.getItem("jokkouid") !== null) {
-      localStorage.removeItem("jokkouid");
-    } else {
-      sessionStorage.removeItem("jokkouid");
-    }
-    setTimeout(reload, 500);
+      .then(() => {
+        if (localStorage.getItem("jokkouid") !== null) {
+          localStorage.removeItem("jokkouid");
+        } else {
+          sessionStorage.removeItem("jokkouid");
+        }
+      })
+      .then(() => reload());
   } catch (error) {
     console.log(error);
   }
@@ -75,11 +83,7 @@ handleDeletePost = async (id) => {
       },
     })
       .then((res) => res.text())
-      .then((res) => resolve(res ? JSON.parse(res) : {}))
-      .catch((error) => {
-        reject(error);
-      });
-    setTimeout(reload, 500);
+      .then(() => refresh());
   } catch (error) {
     console.log(error);
   }
@@ -96,7 +100,11 @@ handleEditPost = async (id) => {
   const filteredUsers2 = sp
     ? users.filter((user) => user.id == p.userId)
     : null;
-  const subUser = filteredUsers2.length > 0 ? filteredUsers2[0] : null;
+  const subUser = filteredUsers2
+    ? filteredUsers2.length > 0
+      ? filteredUsers2[0]
+      : null
+    : null;
   if (sp) {
     const post = document.createElement("div");
     post.className = "col-xl-4";
@@ -211,6 +219,12 @@ repost = async (id) => {
   document.getElementById("sub-post").appendChild(post);
 };
 
+findUser = (name) => {
+  const users = fetch(userUrl).then((res) => res.json());
+  const filteredUsers = users.filter((user) => user.username == name);
+  return filteredUsers[0].id;
+};
+
 handleOnSubmit = async () => {
   const users = await fetch(userUrl).then((res) => res.json());
   const email = document.getElementById("userEmail").value.toLowerCase();
@@ -239,13 +253,11 @@ handleOnSubmit = async () => {
           }),
         })
           .then((res) => res.text())
-          .then((res) => resolve(res ? JSON.parse(res) : {}))
-          .catch((error) => {
-            reject(error);
-          });
-        setTimeout(() => {
-          window.location.replace(`/index.html`);
-        }, 300);
+          .then(() => findUser(username))
+          .then((i) => {
+            sessionStorage.setItem("jokkouid", i);
+          })
+          .then(() => reload());
       } else {
         alert("Username already exists");
       }
@@ -322,11 +334,7 @@ handleOnPost = async () => {
         }),
       })
         .then((res) => res.text())
-        .then((res) => resolve(res ? JSON.parse(res) : {}))
-        .catch((error) => {
-          reject(error);
-        });
-      setTimeout(reload, 500);
+        .then(() => refresh());
     } else {
       alert("You have not typed anything!");
     }
@@ -356,11 +364,7 @@ handleRepost = async () => {
         }),
       })
         .then((res) => res.text())
-        .then((res) => resolve(res ? JSON.parse(res) : {}))
-        .catch((error) => {
-          reject(error);
-        });
-      setTimeout(reload, 500);
+        .then(() => refresh());
     } else {
       alert("You have not typed anything!");
     }
@@ -388,11 +392,7 @@ handleOnEdit = async () => {
         }),
       })
         .then((res) => res.text())
-        .then((res) => resolve(res ? JSON.parse(res) : {}))
-        .catch((error) => {
-          reject(error);
-        });
-      setTimeout(reload, 500);
+        .then(() => refresh());
     } else {
       alert("You have not typed anything!");
     }
@@ -406,9 +406,7 @@ populatePostList = async () => {
     const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
-    const likes = await fetch(
-      `https://mis321-pa4-api.herokuapp.com/api/Like`
-    ).then((res) => res.json());
+    const likes = await fetch(likeUrl).then((res) => res.json());
     posts.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
@@ -443,9 +441,7 @@ populateProfileList = async () => {
     const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
-    const likes = await fetch(
-      `https://mis321-pa4-api.herokuapp.com/api/Like`
-    ).then((res) => res.json());
+    const likes = await fetch(likeUrl).then((res) => res.json());
     posts.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
@@ -479,9 +475,7 @@ populateLikes = async () => {
     const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
-    const likes = await fetch(
-      `https://mis321-pa4-api.herokuapp.com/api/Like`
-    ).then((res) => res.json());
+    const likes = await fetch(likeUrl).then((res) => res.json());
     posts.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
@@ -517,9 +511,7 @@ populateUserList = async () => {
     const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
-    const likes = await fetch(
-      `https://mis321-pa4-api.herokuapp.com/api/Like`
-    ).then((res) => res.json());
+    const likes = await fetch(likeUrl).then((res) => res.json());
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     const uID = parseInt(params.jokkouid);
@@ -558,9 +550,7 @@ populateUserLikes = async () => {
     const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
-    const likes = await fetch(
-      `https://mis321-pa4-api.herokuapp.com/api/Like`
-    ).then((res) => res.json());
+    const likes = await fetch(likeUrl).then((res) => res.json());
     const urlSearchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(urlSearchParams.entries());
     const uID = parseInt(params.jokkouid);
@@ -601,9 +591,7 @@ handleOnSearch = async () => {
     const uid = getId();
     const posts = await fetch(postUrl).then((res) => res.json());
     const users = await fetch(userUrl).then((res) => res.json());
-    const likes = await fetch(
-      `https://mis321-pa4-api.herokuapp.com/api/Like`
-    ).then((res) => res.json());
+    const likes = await fetch(likeUrl).then((res) => res.json());
     posts.sort((a, b) => {
       return new Date(b.date) - new Date(a.date);
     });
@@ -879,6 +867,19 @@ loadMessages = async (uID) => {
               </div>
             </div>`;
       document.getElementById("messages").appendChild(message);
+      fetch(chatUrl, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userOneId: uid,
+          userTwoId: uID,
+        }),
+      })
+        .then((res) => res.text())
+        .then(() => reloadMessages());
     }
   } catch (error) {
     console.error(error);
@@ -886,7 +887,7 @@ loadMessages = async (uID) => {
 };
 
 reloadMessages = () => {
-  loadMessages(document.getElementById("secondary-id").innerHTML);
+  loadMessages(parseInt(document.getElementById("secondary-id").innerHTML));
 };
 
 sendMessage = async () => {
@@ -896,11 +897,6 @@ sendMessage = async () => {
     if (document.getElementById("secondary-id")) {
       try {
         const uid = getId();
-        const chats = await fetch(chatUrl).then((res) => res.json());
-        const messages = await fetch(messageUrl).then((res) => res.json());
-        const uTwoId = parseInt(
-          document.getElementById("secondary-id").innerHTML
-        );
         const chatId = document.getElementById("chat-id")
           ? parseInt(document.getElementById("chat-id").innerHTML)
           : null;
@@ -924,52 +920,7 @@ sendMessage = async () => {
             text: inputBox.value,
           };
           inputBox.value = "";
-          postChat(messageToSend);
-          messages.push(messageToSend);
-        } else {
-          const chatToSend = {
-            userOneId: uid,
-            userTwoId: uTwoId,
-          };
-          fetch(chatUrl, {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(chatToSend),
-          })
-            .then((res) => res.text())
-            .then((res) => resolve(res ? JSON.parse(res) : {}))
-            .catch((error) => {
-              reject(error);
-            });
-          chats.push(chatToSend);
-          const chats2 = await fetch(chatUrl).then((res) => res.json());
-          const filteredChats = chats2.filter(
-            (chat) => chat.userOneId == uid && chat.userTwoId == uTwoId
-          );
-          const chat = filteredChats[0];
-          const message = document.createElement("div");
-          message.className = "col-6 align-self-end";
-          message.innerHTML = `<div class="col-xl-12 w-100">
-          <div class="text-white">
-            <div class="text-center">
-              ${inputBox.value}
-            </div>
-          </div>
-          <div class="date me-2">${dateFormat(new Date().toISOString())}</div>
-        </div>`;
-          ms.appendChild(message);
-          ms.scrollTop = ms.scrollHeight;
-          const messageToSend = {
-            chatId: chat.id,
-            userId: uid,
-            text: inputBox.value,
-            date: new Date().toISOString(),
-          };
-          inputBox.value = "";
-          postChat(messageToSend);
+          postMessage(messageToSend);
         }
       } catch (error) {
         console.error(error);
@@ -978,7 +929,7 @@ sendMessage = async () => {
   }
 };
 
-postChat = async (message) => {
+postMessage = async (message) => {
   try {
     await fetch(messageUrl, {
       method: "POST",
@@ -989,10 +940,7 @@ postChat = async (message) => {
       body: JSON.stringify(message),
     })
       .then((res) => res.text())
-      .then((res) => resolve(res ? JSON.parse(res) : {}))
-      .catch((error) => {
-        reject(error);
-      });
+      .then(() => reloadMessages());
   } catch (error) {
     console.error(error);
   }

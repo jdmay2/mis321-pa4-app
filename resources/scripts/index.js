@@ -4,6 +4,17 @@ document.addEventListener("scroll", () => {
   document.documentElement.dataset.scroll = window.scrollY;
 });
 
+refreshLikes = () => {
+  if (document.URL.includes("home.html")) {
+    populatePostList();
+  } else if (
+    document.URL.includes("profile.html") ||
+    document.URL.includes("user.html")
+  ) {
+    populateLikes();
+  }
+};
+
 handleCreate = () => {
   document.getElementById("login-email").style.display = "flex";
   document.getElementById("login-check").style.display = "none";
@@ -30,12 +41,7 @@ deleteLike = async (id) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-    })
-      .then((res) => res.text())
-      .then((res) => resolve(res ? JSON.parse(res) : {}))
-      .catch((error) => {
-        reject(error);
-      });
+    }).then(() => refreshLikes());
   } catch (error) {
     console.log(error);
   }
@@ -63,12 +69,7 @@ postLike = async (id) => {
           postId: id,
           userId: uid,
         }),
-      })
-        .then((res) => res.text())
-        .then((res) => resolve(res ? JSON.parse(res) : {}))
-        .catch((error) => {
-          reject(error);
-        });
+      }).then(() => refreshLikes());
     } catch (err) {
       console.log(err);
     }
