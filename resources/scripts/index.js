@@ -6,7 +6,7 @@ document.addEventListener("scroll", () => {
 
 refreshLikes = () => {
   if (document.URL.includes("home.html")) {
-    populatePostList();
+    return;
   } else if (
     document.URL.includes("profile.html") ||
     document.URL.includes("user.html")

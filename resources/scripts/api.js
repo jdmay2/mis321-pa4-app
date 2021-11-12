@@ -83,7 +83,9 @@ handleDeletePost = async (id) => {
       },
     })
       .then((res) => res.text())
-      .then(() => refresh());
+      .then(() => {
+        document.getElementById(`post-${id}`).remove();
+      });
   } catch (error) {
     console.log(error);
   }
@@ -141,6 +143,7 @@ postItem = ({ p, posts, users, likes, uid }) => {
   const subUser = filteredUsers2[0];
   const username = filteredUsers[0].username;
   const post = document.createElement("div");
+  post.id = `post-${p.id}`;
   post.className = "col-xl-4 animate__animated animate__zoomIn";
   post.innerHTML = `<div id="cd" class="card text-white">
           <div class="card-header text-center">
@@ -192,6 +195,136 @@ postItem = ({ p, posts, users, likes, uid }) => {
           </div>
         </div>`;
   document.getElementById("posts").appendChild(post);
+};
+
+prePostItem = ({ p, posts, users, likes, uid }) => {
+  const filteredPosts = posts.filter((post) => post.id == p.subId);
+  const subPost = filteredPosts[0];
+  const filteredUsers = users.filter((user) => user.id == p.userId);
+  const filteredUsers2 =
+    subPost !== undefined
+      ? users.filter((user) => user.id == subPost.userId)
+      : [];
+  const subUser = filteredUsers2[0];
+  const username = filteredUsers[0].username;
+  const post = document.createElement("div");
+  post.id = `post-${p.id}`;
+  post.className = "col-xl-4 animate__animated animate__zoomIn";
+  post.innerHTML = `<div id="cd" class="card text-white">
+          <div class="card-header text-center">
+            <a id="user-tag" onclick="navUser(${p.userId})">${username}</a>
+          </div>
+          ${
+            p.subId == 0
+              ? ""
+              : `<div id="sub-post-body" class="col-xl-4">
+              <div id="sub-cd" class="card text-white">
+              <div class="card-header text-center">
+                <a id="user-tag" onclick="navUser(${subPost.userId})">${
+                  subUser.username
+                }</a>
+              </div>
+              <div class="card-body">
+                <div class="card-text">${subPost.text}</div>
+              </div>
+              <div class="card-footer text-center">
+                ${dateFormat(subPost.date)}
+              </div>
+            </div>
+              </div>`
+          }
+          <div class="card-body">
+              <div class="card-text">${p.text}</div>
+              <div id="rating">
+                ${
+                  p.userId == uid
+                    ? `<i id="like-${p.id}" class="bi bi-trash-fill" onclick="handleDeletePost(${p.id})"></i>
+                      <i class="bi bi-pencil-square" data-bs-toggle="modal"
+                      data-bs-target="#editModal" onclick="handleEditPost(${p.id})"></i>`
+                    : `<i id="like-${p.id}" class="bi ${
+                        likes.filter(
+                          (like) => like.postId == p.id && like.userId == uid
+                        ).length > 0
+                          ? "bi-heart-fill"
+                          : "bi-heart"
+                      }" onclick="like(${p.id})"></i>
+                      <i class="bi bi-arrow-repeat" data-bs-toggle="modal"
+                      data-bs-target="#repostModal" onclick="repost(${
+                        p.id
+                      })"></i>`
+                }
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            ${dateFormat(p.date)}
+          </div>
+        </div>`;
+  document.getElementById("posts").prepend(post);
+};
+
+editPostItem = ({ p, posts, users, likes, uid }) => {
+  const filteredPosts = posts.filter((post) => post.id == p.subId);
+  const subPost = filteredPosts[0];
+  const filteredUsers = users.filter((user) => user.id == p.userId);
+  const filteredUsers2 =
+    subPost !== undefined
+      ? users.filter((user) => user.id == subPost.userId)
+      : [];
+  const subUser = filteredUsers2[0];
+  const username = filteredUsers[0].username;
+  const post = document.createElement("div");
+  post.id = `post-${p.id}`;
+  post.className = "col-xl-4 animate__animated animate__zoomIn";
+  post.innerHTML = `<div id="cd" class="card text-white">
+          <div class="card-header text-center">
+            <a id="user-tag" onclick="navUser(${p.userId})">${username}</a>
+          </div>
+          ${
+            p.subId == 0
+              ? ""
+              : `<div id="sub-post-body" class="col-xl-4">
+              <div id="sub-cd" class="card text-white">
+              <div class="card-header text-center">
+                <a id="user-tag" onclick="navUser(${subPost.userId})">${
+                  subUser.username
+                }</a>
+              </div>
+              <div class="card-body">
+                <div class="card-text">${subPost.text}</div>
+              </div>
+              <div class="card-footer text-center">
+                ${dateFormat(subPost.date)}
+              </div>
+            </div>
+              </div>`
+          }
+          <div class="card-body">
+              <div class="card-text">${p.text}</div>
+              <div id="rating">
+                ${
+                  p.userId == uid
+                    ? `<i id="like-${p.id}" class="bi bi-trash-fill" onclick="handleDeletePost(${p.id})"></i>
+                      <i class="bi bi-pencil-square" data-bs-toggle="modal"
+                      data-bs-target="#editModal" onclick="handleEditPost(${p.id})"></i>`
+                    : `<i id="like-${p.id}" class="bi ${
+                        likes.filter(
+                          (like) => like.postId == p.id && like.userId == uid
+                        ).length > 0
+                          ? "bi-heart-fill"
+                          : "bi-heart"
+                      }" onclick="like(${p.id})"></i>
+                      <i class="bi bi-arrow-repeat" data-bs-toggle="modal"
+                      data-bs-target="#repostModal" onclick="repost(${
+                        p.id
+                      })"></i>`
+                }
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            ${dateFormat(p.date)}
+          </div>
+        </div>`;
+  return post;
 };
 
 repost = async (id) => {
@@ -313,12 +446,27 @@ handleOnLogin = async () => {
   }
 };
 
+getPost = async ({ uid }) => {
+  const posts = await fetch(postUrl).then((res) => res.json());
+  const filteredPosts = posts.filter((post) => post.userId == uid);
+  const p = filteredPosts[filteredPosts.length - 1];
+  return p;
+};
+
+getPostById = async ({ id }) => {
+  const posts = await fetch(postUrl).then((res) => res.json());
+  const filteredPosts = posts.filter((post) => post.id == id);
+  const p = filteredPosts[0];
+  return p;
+};
+
 handleOnPost = async () => {
   const uid = getId();
+  const users = await fetch(userUrl).then((res) => res.json());
+  const posts = await fetch(postUrl).then((res) => res.json());
+  const likes = await fetch(likeUrl).then((res) => res.json());
   const text = document.getElementById("postInput").value;
   const date = new Date().toISOString();
-  console.log(date);
-  console.log(uid);
   try {
     if (text.length > 0) {
       fetch(postUrl, {
@@ -334,7 +482,13 @@ handleOnPost = async () => {
         }),
       })
         .then((res) => res.text())
-        .then(() => refresh());
+        .then(() => {
+          return getPost({ uid });
+        })
+        .then((p) => {
+          document.getElementById("postInput").value = "";
+          prePostItem({ p: p, posts, users, likes, uid });
+        });
     } else {
       alert("You have not typed anything!");
     }
@@ -346,6 +500,9 @@ handleOnPost = async () => {
 handleRepost = async () => {
   const uid = getId();
   const pid = parseInt(document.getElementById("postId").innerText);
+  const posts = await fetch(postUrl).then((res) => res.json());
+  const likes = await fetch(likeUrl).then((res) => res.json());
+  const users = await fetch(userUrl).then((res) => res.json());
   const text = document.getElementById("repostInput").value;
   const date = new Date().toISOString();
   try {
@@ -364,7 +521,13 @@ handleRepost = async () => {
         }),
       })
         .then((res) => res.text())
-        .then(() => refresh());
+        .then(() => {
+          return getPost({ uid });
+        })
+        .then((p) => {
+          document.getElementById("postInput").value = "";
+          prePostItem({ p: p, posts, users, likes, uid });
+        });
     } else {
       alert("You have not typed anything!");
     }
@@ -376,8 +539,10 @@ handleRepost = async () => {
 handleOnEdit = async () => {
   const pid = parseInt(document.getElementById("editPostId").innerText);
   const text = document.getElementById("editInput").value;
-  console.log(pid);
-  console.log(text);
+  const uid = getId();
+  const posts = await fetch(postUrl).then((res) => res.json());
+  const likes = await fetch(likeUrl).then((res) => res.json());
+  const users = await fetch(userUrl).then((res) => res.json());
   try {
     if (text.length > 0) {
       fetch(postUrl, {
@@ -391,8 +556,15 @@ handleOnEdit = async () => {
           text: text,
         }),
       })
-        .then((res) => res.text())
-        .then(() => refresh());
+        .then(() => {
+          return getPostById({ id: pid });
+        })
+        .then((p) => {
+          document.getElementById("editInput").value = "";
+          document
+            .getElementById(`post-${pid}`)
+            .replaceWith(editPostItem({ p: p, posts, users, likes, uid }));
+        });
     } else {
       alert("You have not typed anything!");
     }
