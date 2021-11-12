@@ -793,6 +793,7 @@ handleUserSearch = async () => {
 };
 
 loadMessages = async (uID) => {
+  document.getElementById("refresh").style.display = "flex";
   try {
     const uid = getId();
     const chats = await fetch(chatUrl).then((res) => res.json());
@@ -882,6 +883,10 @@ loadMessages = async (uID) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+reloadMessages = () => {
+  loadMessages(document.getElementById("secondary-id").innerHTML);
 };
 
 sendMessage = async () => {

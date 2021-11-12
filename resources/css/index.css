@@ -895,6 +895,34 @@ input::-webkit-search-cancel-button {
   padding: 15px;
 }
 
+#message-column #refresh {
+  display: none;
+  position: fixed;
+  right: 15px;
+  width: 75px;
+  height: 75px;
+  border-width: 0px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 37.5px;
+  color: whitesmoke;
+  background-color: none;
+  background-image: radial-gradient(circle, rgb(31, 0, 88), #3000df);
+  box-shadow: 4px 4px 8px #00000070;
+  animation: pulse 3s ease infinite;
+  z-index: 3;
+}
+
+#message-column #refresh:hover {
+  width: 80px;
+  height: 80px;
+  border-radius: 45px;
+}
+
+#message-column #refresh .bi {
+  font-size: 2em;
+}
+
 #messages {
   display: flex;
   flex-direction: column;
