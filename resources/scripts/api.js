@@ -142,6 +142,10 @@ postItem = ({ p, posts, users, likes, uid }) => {
       : [];
   const subUser = filteredUsers2[0];
   const username = filteredUsers[0].username;
+  const likesByPost = likes.filter((like) => like.postId == p.id);
+  const postLikes = likesByPost.length > 0 ? likesByPost.length : 0;
+  const postBySub = posts.filter((post) => post.subId == p.id);
+  const reposts = postBySub.length > 0 ? postBySub.length : 0;
   const post = document.createElement("div");
   post.id = `post-${p.id}`;
   post.className = "col-xl-4 animate__animated animate__zoomIn";
@@ -190,138 +194,16 @@ postItem = ({ p, posts, users, likes, uid }) => {
                 }
             </div>
           </div>
-          <div class="card-footer text-center">
-            ${dateFormat(p.date)}
-          </div>
-        </div>`;
-  document.getElementById("posts").appendChild(post);
-};
-
-prePostItem = ({ p, posts, users, likes, uid }) => {
-  const filteredPosts = posts.filter((post) => post.id == p.subId);
-  const subPost = filteredPosts[0];
-  const filteredUsers = users.filter((user) => user.id == p.userId);
-  const filteredUsers2 =
-    subPost !== undefined
-      ? users.filter((user) => user.id == subPost.userId)
-      : [];
-  const subUser = filteredUsers2[0];
-  const username = filteredUsers[0].username;
-  const post = document.createElement("div");
-  post.id = `post-${p.id}`;
-  post.className = "col-xl-4 animate__animated animate__zoomIn";
-  post.innerHTML = `<div id="cd" class="card text-white">
-          <div class="card-header text-center">
-            <a id="user-tag" onclick="navUser(${p.userId})">${username}</a>
-          </div>
-          ${
-            p.subId == 0
-              ? ""
-              : `<div id="sub-post-body" class="col-xl-4">
-              <div id="sub-cd" class="card text-white">
-              <div class="card-header text-center">
-                <a id="user-tag" onclick="navUser(${subPost.userId})">${
-                  subUser.username
-                }</a>
+          <div id="post-footer" class="card-footer">
+            <div id="date-column" class="col align-center">
+              ${dateFormat(p.date)}
+            </div>
+            <div id="post-analytics-col" class="col">
+              <div id="like-count">${postLikes}<i class="bi bi-heart-fill"></i>
               </div>
-              <div class="card-body">
-                <div class="card-text">${subPost.text}</div>
-              </div>
-              <div class="card-footer text-center">
-                ${dateFormat(subPost.date)}
+              <div id="repost-count">${reposts}<i class="bi bi-arrow-repeat"></i>
               </div>
             </div>
-              </div>`
-          }
-          <div class="card-body">
-              <div class="card-text">${p.text}</div>
-              <div id="rating">
-                ${
-                  p.userId == uid
-                    ? `<i id="like-${p.id}" class="bi bi-trash-fill" onclick="handleDeletePost(${p.id})"></i>
-                      <i class="bi bi-pencil-square" data-bs-toggle="modal"
-                      data-bs-target="#editModal" onclick="handleEditPost(${p.id})"></i>`
-                    : `<i id="like-${p.id}" class="bi ${
-                        likes.filter(
-                          (like) => like.postId == p.id && like.userId == uid
-                        ).length > 0
-                          ? "bi-heart-fill"
-                          : "bi-heart"
-                      }" onclick="like(${p.id})"></i>
-                      <i class="bi bi-arrow-repeat" data-bs-toggle="modal"
-                      data-bs-target="#repostModal" onclick="repost(${
-                        p.id
-                      })"></i>`
-                }
-            </div>
-          </div>
-          <div class="card-footer text-center">
-            ${dateFormat(p.date)}
-          </div>
-        </div>`;
-  document.getElementById("posts").prepend(post);
-};
-
-editPostItem = ({ p, posts, users, likes, uid }) => {
-  const filteredPosts = posts.filter((post) => post.id == p.subId);
-  const subPost = filteredPosts[0];
-  const filteredUsers = users.filter((user) => user.id == p.userId);
-  const filteredUsers2 =
-    subPost !== undefined
-      ? users.filter((user) => user.id == subPost.userId)
-      : [];
-  const subUser = filteredUsers2[0];
-  const username = filteredUsers[0].username;
-  const post = document.createElement("div");
-  post.id = `post-${p.id}`;
-  post.className = "col-xl-4 animate__animated animate__zoomIn";
-  post.innerHTML = `<div id="cd" class="card text-white">
-          <div class="card-header text-center">
-            <a id="user-tag" onclick="navUser(${p.userId})">${username}</a>
-          </div>
-          ${
-            p.subId == 0
-              ? ""
-              : `<div id="sub-post-body" class="col-xl-4">
-              <div id="sub-cd" class="card text-white">
-              <div class="card-header text-center">
-                <a id="user-tag" onclick="navUser(${subPost.userId})">${
-                  subUser.username
-                }</a>
-              </div>
-              <div class="card-body">
-                <div class="card-text">${subPost.text}</div>
-              </div>
-              <div class="card-footer text-center">
-                ${dateFormat(subPost.date)}
-              </div>
-            </div>
-              </div>`
-          }
-          <div class="card-body">
-              <div class="card-text">${p.text}</div>
-              <div id="rating">
-                ${
-                  p.userId == uid
-                    ? `<i id="like-${p.id}" class="bi bi-trash-fill" onclick="handleDeletePost(${p.id})"></i>
-                      <i class="bi bi-pencil-square" data-bs-toggle="modal"
-                      data-bs-target="#editModal" onclick="handleEditPost(${p.id})"></i>`
-                    : `<i id="like-${p.id}" class="bi ${
-                        likes.filter(
-                          (like) => like.postId == p.id && like.userId == uid
-                        ).length > 0
-                          ? "bi-heart-fill"
-                          : "bi-heart"
-                      }" onclick="like(${p.id})"></i>
-                      <i class="bi bi-arrow-repeat" data-bs-toggle="modal"
-                      data-bs-target="#repostModal" onclick="repost(${
-                        p.id
-                      })"></i>`
-                }
-            </div>
-          </div>
-          <div class="card-footer text-center">
-            ${dateFormat(p.date)}
           </div>
         </div>`;
   return post;
@@ -487,7 +369,9 @@ handleOnPost = async () => {
         })
         .then((p) => {
           document.getElementById("postInput").value = "";
-          prePostItem({ p: p, posts, users, likes, uid });
+          document
+            .getElementById("posts")
+            .prepend(postItem({ p: p, posts, users, likes, uid }));
         });
     } else {
       alert("You have not typed anything!");
@@ -526,7 +410,9 @@ handleRepost = async () => {
         })
         .then((p) => {
           document.getElementById("postInput").value = "";
-          prePostItem({ p: p, posts, users, likes, uid });
+          document
+            .getElementById("posts")
+            .prepend(postItem({ p: p, posts, users, likes, uid }));
         });
     } else {
       alert("You have not typed anything!");
@@ -563,7 +449,7 @@ handleOnEdit = async () => {
           document.getElementById("editInput").value = "";
           document
             .getElementById(`post-${pid}`)
-            .replaceWith(editPostItem({ p: p, posts, users, likes, uid }));
+            .replaceWith(postItem({ p: p, posts, users, likes, uid }));
         });
     } else {
       alert("You have not typed anything!");
@@ -588,7 +474,9 @@ populatePostList = async () => {
     if (posts.length > 0) {
       for (let i = 0; i < posts.length; i++) {
         setTimeout(() => {
-          postItem({ p: posts[i], posts, users, likes, uid });
+          document
+            .getElementById("posts")
+            .appendChild(postItem({ p: posts[i], posts, users, likes, uid }));
         }, i * 100);
       }
     } else {
@@ -623,7 +511,11 @@ populateProfileList = async () => {
     document.getElementById("spinner").style.display = "none";
     if (filteredPosts.length > 0) {
       for (let i = 0; i < filteredPosts.length; i++) {
-        postItem({ p: filteredPosts[i], posts, users, likes, uid });
+        document
+          .getElementById("posts")
+          .appendChild(
+            postItem({ p: filteredPosts[i], posts, users, likes, uid })
+          );
       }
     } else {
       const post = document.createElement("div");
@@ -659,7 +551,11 @@ populateLikes = async () => {
     document.getElementById("spinner").style.display = "none";
     if (filteredPosts.length > 0) {
       for (let i = 0; i < filteredPosts.length; i++) {
-        postItem({ p: filteredPosts[i], posts, users, likes, uid });
+        document
+          .getElementById("posts")
+          .appendChild(
+            postItem({ p: filteredPosts[i], posts, users, likes, uid })
+          );
       }
     } else {
       const post = document.createElement("div");
@@ -697,7 +593,11 @@ populateUserList = async () => {
       document.getElementById("spinner").style.display = "none";
       if (filteredPosts.length > 0) {
         for (let i = 0; i < filteredPosts.length; i++) {
-          postItem({ p: filteredPosts[i], posts, users, likes, uid });
+          document
+            .getElementById("posts")
+            .appendChild(
+              postItem({ p: filteredPosts[i], posts, users, likes, uid })
+            );
         }
       } else {
         const post = document.createElement("div");
@@ -740,7 +640,11 @@ populateUserLikes = async () => {
       document.getElementById("spinner").style.display = "none";
       if (filteredPosts.length > 0) {
         for (let i = 0; i < filteredPosts.length; i++) {
-          postItem({ p: filteredPosts[i], posts, users, likes, uid });
+          document
+            .getElementById("posts")
+            .appendChild(
+              postItem({ p: filteredPosts[i], posts, users, likes, uid })
+            );
         }
       } else {
         const post = document.createElement("div");
@@ -789,7 +693,9 @@ handleOnSearch = async () => {
         document.getElementById("spinner").style.display = "none";
         if (filteredPosts.length > 0) {
           filteredPosts.forEach((p) => {
-            postItem({ p: p, posts, users, likes, uid });
+            document
+              .getElementById("posts")
+              .appendChild(postItem({ p: p, posts, users, likes, uid }));
           });
         } else {
           const post = document.createElement("div");

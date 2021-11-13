@@ -58,7 +58,6 @@ postLike = async (id) => {
   );
   if (filteredLikes.length == 0) {
     try {
-      console.log(id);
       fetch(likeUrl, {
         method: "POST",
         headers: {

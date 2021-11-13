@@ -266,13 +266,51 @@ input::-webkit-search-cancel-button {
   margin-right: 4pt;
 }
 
+#post-footer #post-analytics-col {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000050;
+  border-radius: 10px;
+  position: absolute;
+  padding-left: 10pt;
+  padding-right: 10pt;
+  right: 0;
+  margin-right: 10pt;
+}
+
+#post-footer #like-count {
+  font-size: 9pt;
+}
+
+#post-footer .bi {
+  margin-left: 4px;
+}
+
+#post-footer .bi-heart-fill {
+  font-size: 6.5pt;
+}
+
+#post-footer .bi-arrow-repeat {
+  font-size: 8.5pt;
+}
+
+#post-footer #repost-count {
+  font-size: 9pt;
+  margin-left: 30px;
+}
+
 #rating .bi-arrow-repeat {
   font-size: 1.15em;
   margin-left: 2pt;
 }
 
-#rating .bi-heart,
-.bi-heart-fill {
+#rating .bi-heart {
+  margin-right: 1pt;
+}
+
+#rating .bi-heart-fill {
   margin-right: 1pt;
 }
 
@@ -303,6 +341,24 @@ input::-webkit-search-cancel-button {
   box-shadow: inset 0 7px 9px -7px #000000;
   color: rgba(245, 245, 245, 0.863);
   font-size: small;
+}
+
+#post-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+
+#post-footer #date-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
 }
 
 .btn {
