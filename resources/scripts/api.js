@@ -46,9 +46,14 @@ reload = () => {
               console.log(oldMessages);
               if (newMessages.length > oldMessages.length) {
                 console.log("badge time");
-                document
-                  .getElementById(`chat-badge-${uID}`)
-                  .classList.remove("d-none");
+                if (
+                  uID !=
+                  parseInt(document.getElementById("secondary-id").innerHTML)
+                ) {
+                  document
+                    .getElementById(`chat-badge-${uID}`)
+                    .classList.remove("d-none");
+                }
               }
             }
           }
