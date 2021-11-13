@@ -19,6 +19,39 @@ reload = () => {
       if (document.URL.includes("chat.html")) {
         if (document.getElementById("secondary-id")) {
           reloadMessages();
+          const us = document.getElementById("users").children;
+          for (let i = 0; i < us.length; i++) {
+            const uid = us[i].id;
+            const uID = parseInt(uid);
+            const filteredChats = c.filter(
+              (chat) =>
+                (chat.userOneId == id && chat.userTwoId == uID) ||
+                (chat.userOneId == uID && chat.userTwoId == id)
+            );
+            const chats = filteredChats.length > 0 ? filteredChats[0] : null;
+            if (chats) {
+              console.log(chats);
+              const chatId = chats.id;
+              const oldFilteredMessages = messages.filter(
+                (message) => message.chatId == chatId
+              );
+              const oldMessages =
+                oldFilteredMessages.length > 0 ? oldFilteredMessages : null;
+              const newFilteredMessages = m.filter(
+                (message) => message.chatId == chatId
+              );
+              const newMessages =
+                newFilteredMessages.length > 0 ? newFilteredMessages : null;
+              console.log(newMessages);
+              console.log(oldMessages);
+              if (newMessages.length > oldMessages.length) {
+                console.log("badge time");
+                document
+                  .getElementById(`chat-badge-${uID}`)
+                  .classList.remove("d-none");
+              }
+            }
+          }
         } else {
           const us = document.getElementById("users").children;
           for (let i = 0; i < us.length; i++) {
