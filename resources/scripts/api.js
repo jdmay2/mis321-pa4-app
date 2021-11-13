@@ -7,6 +7,25 @@ reload = () => {
   window.location.reload();
 };
 
+/* ******* AUTOMATIC RELOAD - REMOVE IF TOO HIGH OF TRAFFIC ******* */
+
+(async () => {
+  var messages = await fetch(messageUrl).then((res) => res.json());
+  setInterval(async () => {
+    const m = await fetch(messageUrl).then((res) => res.json());
+    if (m.length > messages.length) {
+      messages = m;
+      if (document.URL.includes("chat.html")) {
+        if (document.getElementById("secondary-id")) {
+          reloadMessages();
+        }
+      }
+    }
+  }, 60000);
+})();
+
+/* ******* AUTOMATIC RELOAD - REMOVE IF TOO HIGH OF TRAFFIC ******* */
+
 refresh = () => {
   if (document.URL.includes("home.html")) {
     populatePostList();
