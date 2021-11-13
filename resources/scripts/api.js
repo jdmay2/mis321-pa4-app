@@ -14,6 +14,7 @@ reload = () => {
   setInterval(async () => {
     const m = await fetch(messageUrl).then((res) => res.json());
     const c = await fetch(chatUrl).then((res) => res.json());
+    const users = await fetch(userUrl).then((res) => res.json());
     const id = getId();
     if (m.length > messages.length) {
       if (document.URL.includes("chat.html")) {
@@ -41,15 +42,16 @@ reload = () => {
               );
               const newMessages =
                 newFilteredMessages.length > 0 ? newFilteredMessages : null;
-              if (newMessages.length > oldMessages.length) {
-                console.log("badge time");
-                if (
-                  uID !=
-                  parseInt(document.getElementById("secondary-id").innerHTML)
-                ) {
-                  document
-                    .getElementById(`chat-badge-${uID}`)
-                    .classList.remove("d-none");
+              if (newMessages && oldMessages) {
+                if (newMessages.length > oldMessages.length) {
+                  if (
+                    uID !=
+                    parseInt(document.getElementById("secondary-id").innerHTML)
+                  ) {
+                    document
+                      .getElementById(`chat-badge-${uID}`)
+                      .classList.remove("d-none");
+                  }
                 }
               }
             }
@@ -66,7 +68,6 @@ reload = () => {
             );
             const chats = filteredChats.length > 0 ? filteredChats[0] : null;
             if (chats) {
-              console.log(chats);
               const chatId = chats.id;
               const oldFilteredMessages = messages.filter(
                 (message) => message.chatId == chatId
@@ -78,13 +79,12 @@ reload = () => {
               );
               const newMessages =
                 newFilteredMessages.length > 0 ? newFilteredMessages : null;
-              console.log(newMessages);
-              console.log(oldMessages);
-              if (newMessages.length > oldMessages.length) {
-                console.log("badge time");
-                document
-                  .getElementById(`chat-badge-${uID}`)
-                  .classList.remove("d-none");
+              if (newMessages && oldMessages) {
+                if (newMessages.length > oldMessages.length) {
+                  document
+                    .getElementById(`chat-badge-${uID}`)
+                    .classList.remove("d-none");
+                }
               }
             }
           }
@@ -95,20 +95,41 @@ reload = () => {
         );
         const chats = filterChats.length > 0 ? filterChats : null;
         if (chats) {
-          const chatId = chats[0].id;
-          const oldFilteredMessages = messages.filter(
-            (message) => message.chatId == chatId
-          );
-          const oldMessages =
-            oldFilteredMessages.length > 0 ? oldFilteredMessages : null;
-          const newFilteredMessages = m.filter(
-            (message) => message.chatId == chatId
-          );
-          const newMessages =
-            newFilteredMessages.length > 0 ? newFilteredMessages : null;
-          if (newMessages.length > oldMessages.length) {
-            document.getElementById("chat-badge").style.display = "flex";
-          }
+          chats.forEach((chat) => {
+            const chatId = chat.id;
+            const oldFilteredMessages = messages.filter(
+              (message) => message.chatId == chatId
+            );
+            const oldMessages =
+              oldFilteredMessages.length > 0 ? oldFilteredMessages : null;
+            const newFilteredMessages = m.filter(
+              (message) => message.chatId == chatId
+            );
+            const newMessages =
+              newFilteredMessages.length > 0 ? newFilteredMessages : null;
+            if (newMessages && oldMessages) {
+              if (newMessages.length > oldMessages.length) {
+                const userTwo = newMessages[newMessages.length - 1].userId;
+                const filteredUsers = users.filter(
+                  (user) => user.id == userTwo
+                );
+                const userTwoName = filteredUsers[0].username;
+                document.getElementById("chat-badge").style.display = "flex";
+                if (document.getElementById("chat-badge-name")) {
+                  document.getElementById(`chat-badge-name`).remove();
+                  const name = document.createElement("div");
+                  name.id = "chat-badge-name";
+                  name.innerHTML = userTwoName;
+                  document.getElementById("chat-badge").prepend(name);
+                } else {
+                  const name = document.createElement("div");
+                  name.id = "chat-badge-name";
+                  name.innerHTML = userTwoName;
+                  document.getElementById("chat-badge").prepend(name);
+                }
+              }
+            }
+          });
         }
       }
     }
@@ -161,7 +182,6 @@ dateFormat = (date) => {
 
 deleteAccount = async () => {
   const uid = getId();
-  console.log(uid);
   try {
     fetch(`${userUrl}/${uid}`, {
       method: "DELETE",
@@ -427,7 +447,6 @@ handleOnLogin = async () => {
           sessionStorage.setItem("jokkouid", id);
         }
         window.location.replace(`/home.html`);
-        console.log(id);
       } else {
         alert("Invalid username or password");
       }
