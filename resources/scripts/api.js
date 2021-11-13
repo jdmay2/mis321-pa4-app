@@ -30,7 +30,6 @@ reload = () => {
             );
             const chats = filteredChats.length > 0 ? filteredChats[0] : null;
             if (chats) {
-              console.log(chats);
               const chatId = chats.id;
               const oldFilteredMessages = messages.filter(
                 (message) => message.chatId == chatId
@@ -42,8 +41,6 @@ reload = () => {
               );
               const newMessages =
                 newFilteredMessages.length > 0 ? newFilteredMessages : null;
-              console.log(newMessages);
-              console.log(oldMessages);
               if (newMessages.length > oldMessages.length) {
                 console.log("badge time");
                 if (
