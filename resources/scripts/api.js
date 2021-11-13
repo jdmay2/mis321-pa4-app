@@ -13,15 +13,38 @@ reload = () => {
   var messages = await fetch(messageUrl).then((res) => res.json());
   setInterval(async () => {
     const m = await fetch(messageUrl).then((res) => res.json());
+    const c = await fetch(chatUrl).then((res) => res.json());
     if (m.length > messages.length) {
-      messages = m;
       if (document.URL.includes("chat.html")) {
         if (document.getElementById("secondary-id")) {
           reloadMessages();
         }
+      } else {
+        const id = getId();
+        const filterChats = c.filter(
+          (chat) => chat.userOneId == id || chat.userTwoId == id
+        );
+        const chats = filterChats.length > 0 ? filterChats : null;
+        if (chats) {
+          const chatId = chats[0].id;
+          const oldFilteredMessages = messages.filter(
+            (message) => message.chatId == chatId
+          );
+          const oldMessages =
+            oldFilteredMessages.length > 0 ? oldFilteredMessages : null;
+          const newFilteredMessages = m.filter(
+            (message) => message.chatId == chatId
+          );
+          const newMessages =
+            newFilteredMessages.length > 0 ? newFilteredMessages : null;
+          if (newMessages.length > oldMessages.length) {
+            document.getElementById("chat-badge").style.display = "flex";
+          }
+        }
       }
     }
-  }, 60000);
+    messages = m;
+  }, 15000);
 })();
 
 /* ******* AUTOMATIC RELOAD - REMOVE IF TOO HIGH OF TRAFFIC ******* */

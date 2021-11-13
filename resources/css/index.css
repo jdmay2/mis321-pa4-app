@@ -125,6 +125,10 @@
   height: auto;
 }
 
+#chat-badge {
+  display: none;
+}
+
 .navbar-toggler {
   border-radius: 10px;
   border: none;
