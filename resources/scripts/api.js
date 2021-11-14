@@ -10,6 +10,7 @@ reload = () => {
 /* ******* AUTOMATIC RELOAD - REMOVE IF TOO HIGH OF TRAFFIC ******* */
 
 (async () => {
+  var chats = await fetch(chatUrl).then((res) => res.json());
   var messages = await fetch(messageUrl).then((res) => res.json());
   setInterval(async () => {
     const m = await fetch(messageUrl).then((res) => res.json());
@@ -29,9 +30,9 @@ reload = () => {
                 (chat.userOneId == id && chat.userTwoId == uID) ||
                 (chat.userOneId == uID && chat.userTwoId == id)
             );
-            const chats = filteredChats.length > 0 ? filteredChats[0] : null;
-            if (chats) {
-              const chatId = chats.id;
+            const chatses = filteredChats.length > 0 ? filteredChats[0] : null;
+            if (chatses) {
+              const chatId = chatses.id;
               const oldFilteredMessages = messages.filter(
                 (message) => message.chatId == chatId
               );
@@ -66,9 +67,9 @@ reload = () => {
                 (chat.userOneId == id && chat.userTwoId == uID) ||
                 (chat.userOneId == uID && chat.userTwoId == id)
             );
-            const chats = filteredChats.length > 0 ? filteredChats[0] : null;
-            if (chats) {
-              const chatId = chats.id;
+            const chatses = filteredChats.length > 0 ? filteredChats[0] : null;
+            if (chatses) {
+              const chatId = chatses.id;
               const oldFilteredMessages = messages.filter(
                 (message) => message.chatId == chatId
               );
@@ -93,9 +94,9 @@ reload = () => {
         const filterChats = c.filter(
           (chat) => chat.userOneId == id || chat.userTwoId == id
         );
-        const chats = filterChats.length > 0 ? filterChats : null;
-        if (chats) {
-          chats.forEach((chat) => {
+        const chatses = filterChats.length > 0 ? filterChats : null;
+        if (chatses) {
+          chatses.forEach((chat) => {
             const chatId = chat.id;
             const oldFilteredMessages = messages.filter(
               (message) => message.chatId == chatId
@@ -133,6 +134,7 @@ reload = () => {
         }
       }
     }
+    chats = c;
     messages = m;
   }, 15000);
 })();
