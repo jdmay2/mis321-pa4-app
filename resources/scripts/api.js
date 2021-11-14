@@ -367,8 +367,8 @@ repost = async (id) => {
   document.getElementById("sub-post").appendChild(post);
 };
 
-findUser = (name) => {
-  const users = fetch(userUrl).then((res) => res.json());
+findUser = async (name) => {
+  const users = await fetch(userUrl).then((res) => res.json());
   const filteredUsers = users.filter((user) => user.username == name);
   return filteredUsers[0].id;
 };
