@@ -84,7 +84,6 @@
 
 .navbar {
   display: flex;
-  overflow: hidden;
   background-image: linear-gradient(
     140deg,
     #08b9c5,
@@ -892,17 +891,32 @@ input::-webkit-search-cancel-button {
   z-index: 1;
 }
 
-#users {
+#user-search-results {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
   width: 100%;
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+}
+
+#users {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   padding-top: 5px;
   padding-bottom: 0px;
-  padding-right: 0px;
   padding-left: 0px;
-  overflow: auto;
+  padding-right: 0px;
+  overflow: scroll;
+  overflow-x: hidden;
   overflow-y: scroll;
   border-top-width: 2px;
   border-bottom-width: 0px;
@@ -910,7 +924,6 @@ input::-webkit-search-cancel-button {
   border-left-width: 0px;
   border-color: #000000;
   border-style: solid;
-  margin-top: 5px;
 }
 
 #users .row {
@@ -950,6 +963,7 @@ input::-webkit-search-cancel-button {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  position: relative;
   height: 100%;
   width: 100%;
   padding: 15px;
@@ -986,11 +1000,11 @@ input::-webkit-search-cancel-button {
 #messages {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  min-height: 0px;
-  max-height: 600pt;
-  padding: 0;
-  margin: 0;
+  position: absolute;
+  top: 10px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: scroll;
