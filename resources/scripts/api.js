@@ -1216,6 +1216,9 @@ updateUsername = async () => {
             .then((res) => res.text())
             .then(() => {
               document.getElementById("username-input").value = "";
+            })
+            .then(() => {
+              alert("Username updated successfully!");
             });
         } catch (error) {
           console.error(error);
@@ -1260,6 +1263,9 @@ updatePassword = async () => {
               .then(() => {
                 document.getElementById("old-password-input").value = "";
                 document.getElementById("new-password-input").value = "";
+              })
+              .then(() => {
+                alert("Password updated successfully!");
               });
           } catch (error) {
             console.error(error);
