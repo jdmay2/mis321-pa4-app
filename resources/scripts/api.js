@@ -1173,3 +1173,105 @@ postMessage = async (message) => {
 };
 
 //end of chat script
+
+// start of settings script
+
+onSettingsLoad = () => {
+  if (
+    localStorage.getItem("jokkouid") === null &&
+    sessionStorage.getItem("jokkouid") === null
+  ) {
+    window.location.replace(`/index.html`);
+  }
+};
+
+updateUsername = async () => {
+  const users = await fetch(userUrl).then((res) => res.json());
+  const uid = getId();
+  const username = document
+    .getElementById("username-input")
+    .value.toLowerCase();
+  if (username) {
+    const filteredUsers = users.filter((user) => user.username == username);
+    if (filteredUsers.length > 0) {
+      alert("Username already taken!");
+    } else {
+      const filteredUsers = users.filter((user) => user.id == uid);
+      if (filteredUsers.length > 0) {
+        const user = filteredUsers[0];
+        try {
+          fetch(userUrl, {
+            method: "PUT",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: uid,
+              email: user.email,
+              username: username,
+              password: user.password,
+            }),
+          })
+            .then((res) => res.text())
+            .then(() => {
+              document.getElementById("username-input").value = "";
+            });
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        window.location.replace(`/index.html`);
+      }
+    }
+  } else {
+    alert("Please enter a username");
+  }
+};
+
+updatePassword = async () => {
+  const users = await fetch(userUrl).then((res) => res.json());
+  const uid = getId();
+  const oldPassword = document.getElementById("old-password-input").value;
+  const newPassword = document.getElementById("new-password-input").value;
+  if (oldPassword && newPassword) {
+    const filteredUsers = users.filter((user) => user.id == uid);
+    if (filteredUsers.length > 0) {
+      const user = filteredUsers[0];
+      if (user.password == newPassword) {
+        alert("New password cannot be the same as the old password");
+      } else {
+        if (user.password == oldPassword) {
+          try {
+            fetch(userUrl, {
+              method: "PUT",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                id: uid,
+                email: user.email,
+                username: user.username,
+                password: newPassword,
+              }),
+            })
+              .then((res) => res.text())
+              .then(() => {
+                document.getElementById("old-password-input").value = "";
+                document.getElementById("new-password-input").value = "";
+              });
+          } catch (error) {
+            console.error(error);
+          }
+        } else {
+          alert("Former password does not match!");
+        }
+      }
+    } else {
+      window.location.replace(`/index.html`);
+    }
+  } else {
+    alert("Please enter a password");
+  }
+};

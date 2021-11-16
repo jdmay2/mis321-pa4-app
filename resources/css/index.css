@@ -1094,3 +1094,282 @@ input::-webkit-search-cancel-button {
 }
 
 /* end of chat css */
+
+/* start of settings css */
+
+#settings-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+}
+
+#main-set-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  width: 100%;
+  height: 100%;
+  background-color: #13131a;
+  box-shadow: 0px 0px 15px #50505070;
+  border-radius: 25px;
+}
+
+#settings-header {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  width: fit-content;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 15px;
+  margin-bottom: 10px;
+  margin-left: 15px;
+  background-color: #3d008d;
+  color: whitesmoke;
+  border-radius: 15px;
+}
+
+.settings-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  background-color: #29154b;
+  color: whitesmoke;
+  border-radius: 15px;
+  border-width: 0px;
+  outline: none;
+}
+
+#settings-body-one {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background-image: linear-gradient(
+    270deg,
+    #0000bb,
+    #000061,
+    #301070,
+    #301580,
+    #9800d4
+  );
+  border-radius: 25px;
+  margin-bottom: 10px;
+}
+
+#sub-one {
+  display: flex;
+  flex-direction: row;
+  align-items: space-between;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 10px;
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #13131a;
+  color: whitesmoke;
+  border-radius: 20px;
+  flex-wrap: wrap;
+}
+
+#sub-one #inputGroupPrepend {
+  background-color: #131313;
+  color: #9e9e9e;
+  border-radius: 10px 0px 0px 10px;
+  border-color: #383838;
+  border-width: 2px;
+  margin-right: 10px;
+}
+
+#sub-one .form-control {
+  background-image: none;
+  background-color: transparent;
+  border-width: 2px;
+  border-color: #383838;
+  border-style: solid;
+}
+
+#sub-one #sub-one-fc {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+#sub-one #sub-one-2c {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#sub-one #sub-one-2c #old-password-input {
+  margin-top: 9px;
+  margin-bottom: 20px;
+}
+
+#sub-one-btns {
+  display: flex;
+  flex-direction: row;
+  align-items: space-between;
+  width: 100%;
+  padding-bottom: 20px;
+  padding-top: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: whitesmoke;
+  border-radius: 20px;
+  flex-wrap: nowrap;
+}
+
+#sub-one-btns-fc {
+  padding-right: 10px;
+}
+
+#sub-one-btns-2c {
+  padding-left: 10px;
+}
+
+#user-change-btn {
+  background-color: #303030;
+  border-radius: 10px;
+  border-width: 0px;
+  color: whitesmoke;
+  height: 100%;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#pass-change-btn {
+  background-color: #303030;
+  border-radius: 10px;
+  border-width: 0px;
+  color: whitesmoke;
+  height: 100%;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#settings-body-two {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background-image: linear-gradient(
+    270deg,
+    #ff5607,
+    #f6412d,
+    #d40047,
+    #4f00b6,
+    #301580
+  );
+  border-radius: 25px;
+  margin-bottom: 10px;
+}
+
+#sub-two {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background-color: #13131a;
+  color: whitesmoke;
+  border-radius: 20px;
+}
+
+#sub-two-header {
+  width: 100%;
+  margin-top: 10px;
+  height: fit-content;
+  border-bottom-width: 2px;
+  border-bottom-color: #383838;
+  border-bottom-style: solid;
+  padding-bottom: 10px;
+}
+
+#sub-two .row {
+  padding-top: 0px;
+  margin-top: 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: fit-content;
+  height: fit-content;
+}
+
+#sub-two .bi {
+  padding-left: 15px;
+  margin-right: 15px;
+  font-size: 2em;
+}
+
+#settings-body-three {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background-image: linear-gradient(
+    270deg,
+    #ffc100,
+    #ff9800,
+    #ff5607,
+    #f6412d,
+    #d40047
+  );
+  border-radius: 25px;
+}
+
+#sub-three {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background-color: #13131a;
+  color: whitesmoke;
+  border-radius: 20px;
+}
+
+#sub-three .row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  color: whitesmoke;
+}
+
+#sub-three #delete-text-settings {
+  border-bottom-width: 2px;
+  border-bottom-color: #383838;
+  border-bottom-style: solid;
+}
+
+#settings-delete {
+  background-image: linear-gradient(270deg, #f6412d, #d40047);
+  color: whitesmoke;
+  border-radius: 15px;
+  border-width: 0px;
+  max-width: 600px;
+}

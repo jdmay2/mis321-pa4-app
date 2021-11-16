@@ -135,6 +135,18 @@ navUser = (id) => {
   }
 };
 
+navSettings = () => {
+  const uid =
+    sessionStorage.getItem("jokkouid") !== null
+      ? sessionStorage.getItem("jokkouid")
+      : localStorage.getItem("jokkouid");
+  if (uid !== null) {
+    window.location.assign(`/settings.html`);
+  } else {
+    window.location.assign(`/index.html`);
+  }
+};
+
 signOut = () => {
   if (localStorage.getItem("jokkouid") !== null) {
     localStorage.removeItem("jokkouid");

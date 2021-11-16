@@ -62,15 +62,10 @@
               <a class="nav-link active" aria-current="page" href="#">Chat</a>
             </li>
             <li class="nav-item">
-              <a onclick="signOut()" class="nav-link">Sign Out</a>
+              <a onclick="navSettings()" class="nav-link">Settings</a>
             </li>
             <li class="nav-item">
-              <a
-                data-bs-toggle="modal"
-                data-bs-target="#deleteModal"
-                class="nav-link"
-                >Delete Account</a
-              >
+              <a onclick="signOut()" class="nav-link">Sign Out</a>
             </li>
           </ul>
         </div>
@@ -132,55 +127,6 @@
                 </form>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="modal fade"
-      id="deleteModal"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div id="inside" class="modal-content">
-            <div class="modal-header">
-              <button
-                type="button"
-                class="btn-close btn-close-white"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                class="bi bi-exclamation-circle-fill"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"
-                />
-              </svg>
-              <p class="text-center">
-                Are you sure you want to delete your account? This will also
-                delete all of your posts.
-              </p>
-            </div>
-          </div>
-          <div id="post-button" class="modal-footer">
-            <button
-              onclick="deleteAccount()"
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-            >
-              Delete Account
-            </button>
           </div>
         </div>
       </div>
