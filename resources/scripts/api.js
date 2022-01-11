@@ -269,16 +269,13 @@ handleEditPost = async (id) => {
     const post = document.createElement("div");
     post.className = "col-xl-4";
     post.innerHTML = `<div id="cd" class="card text-white">
-    <div class="card-header text-center">
-      <p id="editPostId">${p.id}</p>
-      <a id="user-tag" onclick="navUser(${sp.userId})">${subUser.username}</a>
-    </div>
     <div class="card-body">
       <div class="card-text">${sp.text}</div>
     </div>
-    <div class="card-footer text-center">
-      ${dateFormat(sp.date)}
-    </div>
+    <div id="edit-header" class="card-header text-center">
+      <p id="editPostId">${p.id}</p>
+      <a id="user-tag" onclick="navUser(${sp.userId})">${subUser.username}</a>
+      <div id="post-header-date">${dateFormat(p.date)}</div></div>
   </div>`;
     document.getElementById("edit-sub-post").appendChild(post);
     document.getElementById("editInput").value = p.text;
@@ -378,16 +375,13 @@ repost = async (id) => {
   const post = document.createElement("div");
   post.className = "row-xl-4";
   post.innerHTML = `<div id="cd" class="card text-white">
-  <div class="card-header text-center">
-    <p id="postId">${p.id}</p>
-    <a id="user-tag" onclick="navUser(${p.userId})">${subUser.username}</a>
-  </div>
   <div class="card-body">
     <div class="card-text">${p.text}</div>
   </div>
-  <div class="card-footer text-center">
-    ${dateFormat(p.date)}
-  </div>
+  <div id="repost-header" class="card-header text-center">
+    <p id="postId">${p.id}</p>
+    <a id="user-tag" onclick="navUser(${p.userId})">${subUser.username}</a>
+  <div id="post-header-date">${dateFormat(p.date)}</div></div>
 </div>`;
   document.getElementById("sub-post").appendChild(post);
 };
