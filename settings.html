@@ -30,10 +30,7 @@
     ></script>
     <script src="./resources/scripts/index.js"></script>
     <script src="./resources/scripts/api.js"></script>
-    <nav
-      id="navigation"
-      class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top"
-    >
+    <nav id="navigation" class="navbar navbar-expand-lg navbar-dark sticky-top">
       <div class="container-fluid">
         <a class="navbar-brand row" onclick="navHome()">
           <img src="./resources/images/jokko-drop.png" alt="" />
@@ -62,15 +59,7 @@
               <a onclick="navChat()" class="nav-link position-relative"
                 >Chat<span
                   id="chat-badge"
-                  class="
-                    position-absolute
-                    top-0
-                    start-100
-                    translate-middle
-                    badge
-                    rounded-pill
-                    bg-danger
-                  "
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                 >
                   <span class="visually-hidden">New alerts</span>
                 </span></a
@@ -89,115 +78,106 @@
       </div>
     </nav>
     <div id="settings-main" class="container-fluid">
-      <div id="main-set-col" class="col">
-        <h6 id="settings-header">Account Settings</h6>
-        <div id="settings-body-one" class="row">
-          <div id="sub-one" class="row-12">
-            <div id="sub-one-fc" class="col-6">
-              <div class="form-group row">
-                <label for="username-input" class="form-label"
-                  >Change Username</label
-                >
-                <div class="input-group">
-                  <span class="input-group-text" id="inputGroupPrepend">@</span>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="username-input"
-                    aria-describedby="inputGroupPrepend"
-                    placeholder="New Username"
-                  />
-                </div>
-              </div>
-            </div>
-            <div id="sub-one-2c" class="col-6">
-              <div class="form-group row">
-                <label for="old-password-input">Change Password</label>
-                <div class="input-group">
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="old-password-input"
-                    placeholder="Old Password"
-                  />
-                </div>
-              </div>
-              <div class="form-group row">
-                <div class="input-group">
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="new-password-input"
-                    placeholder="New Password"
-                  />
-                </div>
-              </div>
-            </div>
-            <div id="sub-one-btns" class="row-12">
-              <div id="sub-one-btns-fc" class="col-6">
-                <button
-                  onclick="updateUsername()"
-                  id="user-change-btn"
-                  class="btn"
-                  type="button"
-                >
-                  Update Username
-                </button>
-              </div>
-              <div id="sub-one-btns-2c" class="col-6">
-                <button
-                  onclick="updatePassword()"
-                  id="pass-change-btn"
-                  class="btn"
-                  type="button"
-                >
-                  Update Password
-                </button>
-              </div>
+      <div id="sub-one" class="row-12">
+        <div id="sub-one-fc" class="col-6">
+          <div class="form-group row">
+            <label for="username-input" class="form-label"
+              >Change Username</label
+            >
+            <div class="input-group">
+              <span class="input-group-text" id="inputGroupPrepend">@</span>
+              <input
+                type="text"
+                class="form-control"
+                id="username-input"
+                aria-describedby="inputGroupPrepend"
+                placeholder="New Username"
+              />
             </div>
           </div>
         </div>
-        <div id="settings-body-two" class="row">
-          <div id="sub-two" class="row">
-            <h6 id="sub-two-header">Find Us On the Web.</h6>
-            <div id="github" class="row w-100">
-              <i class="bi bi-github col-1"></i>
-              <a
-                class="text-light col"
-                href="https://github.com/jdmay2/mis321-pa4-app"
-                >Github.com/jdmay2</a
-              >
+        <div id="sub-one-2c" class="col-6">
+          <div class="form-group row">
+            <label for="old-password-input">Change Password</label>
+            <div class="input-group">
+              <input
+                type="password"
+                class="form-control"
+                id="old-password-input"
+                placeholder="Old Password"
+              />
             </div>
-            <div id="linkedin" class="row w-100">
-              <i class="bi bi-linkedin col-1"></i>
-              <a
-                class="text-light col"
-                href="https://www.linkedin.com/in/josephdmay/"
-                >LinkedIn.com/in/josephdmay</a
-              >
+          </div>
+          <div class="form-group row">
+            <div class="input-group">
+              <input
+                type="password"
+                class="form-control"
+                id="new-password-input"
+                placeholder="New Password"
+              />
             </div>
           </div>
         </div>
-        <div id="settings-body-three" class="row">
-          <div id="sub-three" class="row">
-            <div id="delete-text-settings" class="row w-100">
-              <p>Delete your account here. This action cannot be undone.</p>
-              <p>
-                ~ p.s. we know you don't want to, so why bother. Just go back to
-                scrolling.
-              </p>
-            </div>
-            <div class="row w-100">
-              <button
-                id="settings-delete"
-                data-bs-toggle="modal"
-                data-bs-target="#deleteModal"
-                class="btn"
-              >
-                Delete Account
-              </button>
-            </div>
+        <div id="sub-one-btns" class="row-12">
+          <div id="sub-one-btns-fc" class="col-6">
+            <button
+              onclick="updateUsername()"
+              id="user-change-btn"
+              class="btn"
+              type="button"
+            >
+              Update Username
+            </button>
           </div>
+          <div id="sub-one-btns-2c" class="col-6">
+            <button
+              onclick="updatePassword()"
+              id="pass-change-btn"
+              class="btn"
+              type="button"
+            >
+              Update Password
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="sub-two" class="row">
+        <h6 id="sub-two-header">Find Us On the Web.</h6>
+        <div id="github" class="row w-100">
+          <i class="bi bi-github col-1"></i>
+          <a
+            class="text-light col"
+            href="https://github.com/jdmay2/mis321-pa4-app"
+            >Github.com/jdmay2</a
+          >
+        </div>
+        <div id="linkedin" class="row w-100">
+          <i class="bi bi-linkedin col-1"></i>
+          <a
+            class="text-light col"
+            href="https://www.linkedin.com/in/josephdmay/"
+            >LinkedIn.com/in/josephdmay</a
+          >
+        </div>
+      </div>
+      <div id="sub-three" class="row">
+        <div id="delete-text-settings" class="row w-100">
+          <p>Delete your account here. This action cannot be undone.</p>
+          <p>
+            ~ p.s. we know you don't want to, so why bother. Just go back to
+            scrolling.
+          </p>
+        </div>
+        <div class="row w-100">
+          <button
+            id="settings-delete"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteModal"
+            class="btn"
+          >
+            Delete Account
+          </button>
         </div>
       </div>
     </div>

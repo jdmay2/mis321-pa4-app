@@ -160,6 +160,7 @@ getId = () => {
 };
 
 dateFormat = (date) => {
+  const d = new Date();
   var date = new Date(date);
   var hh = date.getHours() - 6;
   if (hh < 0) {
@@ -171,15 +172,39 @@ dateFormat = (date) => {
   hh = hh ? hh : 12;
   min = min < 10 ? "0" + min : min;
   var strTime = hh + ":" + min + " " + ampm;
-  date =
-    date.toLocaleString("default", {
-      month: "long",
+  if (
+    d.toLocaleString("default", {
+      month: "short",
       day: "numeric",
       year: "numeric",
-    }) +
-    " " +
-    strTime;
-  return date;
+    }) ==
+    date.toLocaleString("default", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    })
+  ) {
+    return strTime;
+  } else if (d.getFullYear() == date.getFullYear()) {
+    date =
+      date.toLocaleString("default", {
+        month: "short",
+        day: "numeric",
+      }) +
+      " " +
+      strTime;
+    return date;
+  } else {
+    date =
+      date.toLocaleString("default", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }) +
+      " " +
+      strTime;
+    return date;
+  }
 };
 
 deleteAccount = async () => {
@@ -283,24 +308,20 @@ postItem = ({ p, posts, users, likes, uid }) => {
   post.id = `post-${p.id}`;
   post.className = "col-xl-4 animate__animated animate__zoomIn";
   post.innerHTML = `<div id="cd" class="card text-white">
-          <div class="card-header text-center">
-            <a id="user-tag" onclick="navUser(${p.userId})">${username}</a>
-          </div>
           ${
             p.subId == 0
               ? ""
               : `<div id="sub-post-body" class="col-xl-4">
               <div id="sub-cd" class="card text-white">
-              <div class="card-header text-center">
-                <a id="user-tag" onclick="navUser(${subPost.userId})">${
-                  subUser.username
-                }</a>
-              </div>
               <div class="card-body">
                 <div class="card-text">${subPost.text}</div>
               </div>
-              <div class="card-footer text-center">
-                ${dateFormat(subPost.date)}
+              <div id="sub-card-header" class="card-header text-center">
+                <a id="user-tag" onclick="navUser(${subPost.userId})">${
+                  subUser.username
+                }</a><div id="post-header-date">${dateFormat(
+                  subPost.date
+                )}</div>
               </div>
             </div>
               </div>`
@@ -328,15 +349,19 @@ postItem = ({ p, posts, users, likes, uid }) => {
             </div>
           </div>
           <div id="post-footer" class="card-footer">
-            <div id="date-column" class="col align-center">
-              ${dateFormat(p.date)}
-            </div>
-            <div id="post-analytics-col" class="col">
+            <div class="card-header text-center">
+            <a id="user-tag" onclick="navUser(${
+              p.userId
+            })">${username}</a><div id="post-header-date">${dateFormat(
+    p.date
+  )}</div>
+          </div>
+              <div id="post-analytics">
               <div id="like-count">${postLikes}<i class="bi bi-heart-fill"></i>
               </div>
               <div id="repost-count">${reposts}<i class="bi bi-arrow-repeat"></i>
               </div>
-            </div>
+              </div>
           </div>
         </div>`;
   return post;
