@@ -1006,7 +1006,7 @@ handleUserSearch = async () => {
 };
 
 loadMessages = async (uID) => {
-  document.getElementById("refresh").style.display = "flex";
+  // document.getElementById("refresh").style.display = "flex";
   document.getElementById(`chat-badge-${uID}`).classList.add("d-none");
   try {
     const uid = getId();
