@@ -1086,11 +1086,13 @@ input::-webkit-search-cancel-button {
   border-radius: 25px;
   background-image: linear-gradient(to top, #d41900, #3100b6);
   background-attachment: fixed;
+  width: fit-content;
 }
 
 #messages .col-6 .col-xl-12 #secondary {
   background-image: linear-gradient(to top, #131313, #313131);
   background-attachment: fixed;
+  width: fit-content;
 }
 
 #messages .col-6 .col-xl-12 .date {
