@@ -84,6 +84,7 @@
 
 .navbar {
   display: flex;
+  backdrop-filter: blur(7px);
 }
 
 .nav-item {
@@ -218,7 +219,7 @@ input::-webkit-search-cancel-button {
   border: 0px;
   background-image: linear-gradient(to top, #748af0, #536fed, #3354ea, #173be2);
   background-attachment: fixed;
-  box-shadow: 4px 4px 8px #00000070;
+  box-shadow: none;
 }
 
 .card-body {
@@ -277,7 +278,7 @@ input::-webkit-search-cancel-button {
   padding-left: 5pt;
   padding-right: 5pt;
   border-radius: 5px;
-  box-shadow: 1px 1px 8px #00000070;
+  /* box-shadow: 1px 1px 8px #00000070; */
 }
 
 #post-footer #like-count {
@@ -341,12 +342,17 @@ input::-webkit-search-cancel-button {
   margin-left: 5px;
 }
 
+#no-posts-header {
+  justify-content: center;
+  color: #fff;
+}
+
 #post-header-date {
   font-size: 8pt;
   margin-bottom: 0pt;
   color: #ffffff90;
   margin-left: 5px;
-  text-shadow: 1px 1px 2px #00000070;
+  /* text-shadow: 1px 1px 2px #00000070; */
 }
 
 .card-header #user-tag {
@@ -354,7 +360,7 @@ input::-webkit-search-cancel-button {
   border-radius: 5px;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  box-shadow: 1px 1px 8px #00000070;
+  /* box-shadow: 1px 1px 8px #00000070; */
 }
 
 .card-header #user-tag:hover {
@@ -1063,11 +1069,20 @@ input::-webkit-search-cancel-button {
   overflow-y: scroll;
 }
 
+#messages .card-header {
+  color: #fff;
+  justify-content: center;
+}
+
+#messages .col-6 {
+  width: fit-content;
+}
+
 #messages .col-6 .col-xl-12 .text-white {
-  padding-right: 10px;
-  padding-left: 10px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-radius: 25px;
   background-image: linear-gradient(to top, #d41900, #3100b6);
   background-attachment: fixed;
@@ -1079,10 +1094,11 @@ input::-webkit-search-cancel-button {
 }
 
 #messages .col-6 .col-xl-12 .date {
-  font-size: small;
+  font-size: 8pt;
+  font-weight: bold;
   color: #ffffff50;
-  margin-left: 15px;
-  margin-bottom: 20px;
+  margin-top: 3px;
+  margin-bottom: 15px;
 }
 
 #user-search {

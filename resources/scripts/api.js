@@ -634,7 +634,7 @@ populatePostList = async () => {
       const post = document.createElement("div");
       post.className = "col-xl-4 w-100 animate__animated animate__zoomIn";
       post.innerHTML = `<div id="cd" class="card text-white">
-            <div class="card-header text-center">
+            <div id="no-posts-header" class="card-header text-center">
               There are no posts to display!
             </div>
           </div>`;
@@ -672,7 +672,7 @@ populateProfileList = async () => {
       const post = document.createElement("div");
       post.className = "col-xl-4 w-100 animate__animated animate__zoomIn";
       post.innerHTML = `<div id="cd" class="card text-white">
-            <div class="card-header text-center">
+            <div id="no-posts-header" class="card-header text-center">
               There are no posts to display!
             </div>
           </div>`;
@@ -712,7 +712,7 @@ populateLikes = async () => {
       const post = document.createElement("div");
       post.className = "col-xl-4 w-100 animate__animated animate__zoomIn";
       post.innerHTML = `<div id="cd" class="card text-white">
-            <div class="card-header text-center">
+            <div id="no-posts-header" class="card-header text-center">
               There are no posts to display!
             </div>
           </div>`;
@@ -754,7 +754,7 @@ populateUserList = async () => {
         const post = document.createElement("div");
         post.className = "col-xl-4 w-100 animate__animated animate__zoomIn";
         post.innerHTML = `<div id="cd" class="card text-white">
-            <div class="card-header text-center">
+            <div id="no-posts-header" class="card-header text-center">
               There are no posts to display!
             </div>
           </div>`;
@@ -801,7 +801,7 @@ populateUserLikes = async () => {
         const post = document.createElement("div");
         post.className = "col-xl-4 w-100 animate__animated animate__zoomIn";
         post.innerHTML = `<div id="cd" class="card text-white">
-            <div class="card-header text-center">
+            <div id="no-posts-header" class="card-header text-center">
               There are no posts to display!
             </div>
           </div>`;
@@ -1070,7 +1070,7 @@ loadMessages = async (uID) => {
                     ${m.text}
                   </div>
                 </div>
-                <div class="date me-2">${dateFormat(m.date)}</div>
+                <div class="date ms-2 me-2 text-end">${dateFormat(m.date)}</div>
               </div>`;
             document.getElementById("messages").appendChild(message);
             document.getElementById("messages").scrollTop =
@@ -1084,7 +1084,7 @@ loadMessages = async (uID) => {
                     ${m.text}
                   </div>
                 </div>
-                <div class="date me-2">${dateFormat(m.date)}</div>
+                <div class="date ms-2 me-2">${dateFormat(m.date)}</div>
               </div>`;
             document.getElementById("messages").appendChild(message);
             document.getElementById("messages").scrollTop =
@@ -1154,7 +1154,9 @@ sendMessage = async () => {
               ${inputBox.value}
             </div>
           </div>
-          <div class="date me-2">${dateFormat(new Date().toISOString())}</div>
+          <div class="date ms-2 me-2 text-end">${dateFormat(
+            new Date().toISOString()
+          )}</div>
         </div>`;
           ms.appendChild(message);
           ms.scrollTop = ms.scrollHeight;
