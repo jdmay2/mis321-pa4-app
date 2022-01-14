@@ -1065,7 +1065,7 @@ loadMessages = async (uID) => {
             const message = document.createElement("div");
             message.className = "col-6 align-self-end";
             message.innerHTML = `<div class="col-xl-12 w-100">
-                <div class="text-white">
+                <div class="text-white ms-auto">
                   <div class="text-center">
                     ${m.text}
                   </div>
